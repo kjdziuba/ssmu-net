@@ -1,5 +1,5 @@
-# Temporarily exclude NPZ files for first push
-outputs/npz/*.npz
+# NOW INCLUDING NPZ files
+# outputs/npz/*.npz  # COMMENTED OUT - we want to include these
 
 # Exclude training outputs (will be generated on RunPod)
 outputs/models/
