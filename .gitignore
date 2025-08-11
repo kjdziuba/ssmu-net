@@ -1,0 +1,61 @@
+# Temporarily exclude NPZ files for first push
+outputs/npz/*.npz
+
+# Exclude training outputs (will be generated on RunPod)
+outputs/models/
+outputs/figures/
+outputs/logs*/
+
+# KEEP these necessary tables
+!outputs/tables/npz_manifest.csv
+!outputs/tables/zscore_stats.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+._*
+Thumbs.db
+
+# Tensorboard
+*/tensorboard/
+events.out.tfevents.*
+
+# Session reports (not needed for running)
+session_reports/
+SESSION_REPORT.md
+MEETING_REPORT.md
+GPU_HANDOVER.md
+setup_github.md
+
+# Archive/test files
+archive/
+test_*.py
+pixel_pixel/
+scripts/gen_arch_diagram.py
+scripts/test_*.py
+scripts/test_installation.py
+scripts/test_preprocess.py
+scripts/visualize_npz.py
+
+# Config variations (keep only main)
+ssmu_net/config_fast.yaml
+ssmu_net/config_overnight.yaml
+
+# WSL script (not needed for RunPod)
+run_in_wsl.sh

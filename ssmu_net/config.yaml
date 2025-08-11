@@ -1,0 +1,128 @@
+project_root: "/Volumes/LaCie/breast_experiments/ssmu_net_project"
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/models"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+data:
+  raw_root: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL"
+  metadata_excel: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/metadata/BR2082_H260.xlsx"
+  annotations_dir: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/Annotations/BR2082_H260_annotations"
+  seed: 1337
+  folds: 5
+  batch_size: 1
+  num_workers: 0
+  patch_size: 64 # was 128
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+
+preprocess:
+  order: "A" # Ferguson-aligned (default), "B" for ablation
+  resample_uniform: true
+  qc_mask:
+    band: [1600, 1700] # Amide I region
+    method: "quantile" # or "otsu"
+    quantile: 0.85
+  pre_norm:
+    type: "l2" # L2 normalization before derivative
+  sg:
+    window: 11
+    polyorder: 2
+    deriv: 1
+  post_norm:
+    type: "l2" # L2 normalization after derivative (or "snv")
+  zscore:
+    enabled: true
+  mean_center:
+    enabled: false
+
+model:
+  sinc:
+    filters: 24 # Original: 32
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba" # Mandatory - no fallback
+    layers: 2
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  embed: 24 # Original: 32
+  unet:
+    base: 24 # Original: 32
+  classes: 8
+  pooling: "attention" # "attention" or "mean"
+  chunk_size: 512
+
+loss:
+  seg:
+    dice: true
+    ce: true
+    class_weights: "inverse_freq"
+  sparsity:
+    alpha: 1.0e-4
+    beta: 1.0e-4
+    ramp_epochs: 10
+  xai_penalty:
+    enabled: false
+    lambda: 0.0
+
+optim:
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  epochs: 120
+  scheduler: "cosine"
+  amp: true
+  grad_clip: 1.0
+
+audits:
+  occlusion:
+    width_cm1: 15
+    stride_cm1: 5
+  jitter:
+    sigma_cm1: 3.0
+  shuffle_controls:
+    channel_shuffle: true
+    label_shuffle: true
+    mask_misregister: [2, 4, 8]
+  holdout: ["slide_id", "block_id", "session_id"]
+
+dfir_export:
+  target_K: [12, 16, 20, 24]
+  min_sep_cm1: 8.0
+  selection: "greedy_nonoverlap"
+  retrain_epochs: 30
+
+reporting:
+  throughput:
+    per_band_ms: 12.0
+    overhead_ms: 150.0
+  figures:
+    [
+      "arch",
+      "bands",
+      "saliency",
+      "qualitative",
+      "ablation",
+      "band_vs_miou",
+      "throughput",
+    ]
+  tables:
+    [
+      "per_class_iou",
+      "ablation",
+      "dfir_k_curve",
+      "metrics_summary",
+      "confusion_matrix",
+    ]
+  latex_out: "outputs/results.tex"
+
+# Acceptance criteria thresholds
+acceptance:
+  negative_control_threshold: 1.5 # Max multiplier above random baseline
+  dfir_retention_threshold: 0.90 # Min retention for K=16,20
+  occlusion_biochemical_overlap: true # Must overlap with known windows

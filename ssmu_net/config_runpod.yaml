@@ -1,0 +1,77 @@
+# RunPod configuration - uses relative paths
+project_root: "."
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/models"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+# Data paths not needed - using preprocessed NPZ
+data:
+  seed: 1337
+  folds: 5
+  batch_size: 1
+  num_workers: 0
+  patch_size: 64
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+
+model:
+  sinc:
+    filters: 24
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba"
+    layers: 2
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  embed: 24
+  unet:
+    base: 24
+  classes: 8
+  pooling: "attention"
+  chunk_size: 512
+
+loss:
+  seg:
+    dice: true
+    ce: true
+    class_weights: "inverse_freq"
+  sparsity:
+    alpha: 1.0e-4
+    beta: 1.0e-4
+    ramp_epochs: 10
+
+optim:
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  epochs: 120
+  scheduler: "cosine"
+  amp: true
+  grad_clip: 1.0
+  # Add gradient accumulation for small batches
+  grad_accumulation: 4
+
+audits:
+  occlusion:
+    width_cm1: 15
+    stride_cm1: 5
+  jitter:
+    sigma_cm1: 3.0
+
+dfir_export:
+  target_K: [12, 16, 20, 24]
+  min_sep_cm1: 8.0
+  selection: "greedy_nonoverlap"
+  retrain_epochs: 30
+
+reporting:
+  figures: ["arch", "bands", "qualitative", "ablation", "band_vs_miou", "throughput"]
+  throughput:
+    overhead_ms: 150.0
+    per_band_ms: 12.0

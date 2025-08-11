@@ -1,0 +1,15 @@
+torch>=2.0.0
+torchvision
+numpy
+scipy
+pandas
+matplotlib
+Pillow
+PyYAML
+h5py
+scikit-learn
+einops
+# mamba-ssm
+tqdm
+torchmetrics
+timm
