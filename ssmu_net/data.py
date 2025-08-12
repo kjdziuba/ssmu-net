@@ -14,6 +14,19 @@ from sklearn.model_selection import GroupKFold, KFold
 import random
 
 
+def resolve_npz_path(path) -> str:
+    """Resolve NPZ path to work with current environment"""
+    # Convert path to string if it's a Path object
+    path_str = str(path)
+    
+    # Convert absolute paths from other systems to current working directory
+    if path_str.startswith('/mnt/e/breast_experiments/ssmu_net_project/'):
+        # Strip the old absolute path and use current working directory
+        relative_path = path_str.replace('/mnt/e/breast_experiments/ssmu_net_project/', '')
+        return relative_path
+    return path_str
+
+
 def compute_zscore_stats(npz_paths: List[str]) -> Tuple[np.ndarray, np.ndarray]:
     """Compute channel-wise mean/std over tissue pixels from training set"""
     s = None
@@ -21,7 +34,8 @@ def compute_zscore_stats(npz_paths: List[str]) -> Tuple[np.ndarray, np.ndarray]:
     n = 0
     
     for p in npz_paths:
-        d = np.load(p)
+        resolved_path = resolve_npz_path(p)
+        d = np.load(resolved_path)
         X = d['X'].astype(np.float32)
         t = d['tissue_mask'].astype(bool)
         
@@ -103,11 +117,11 @@ class NpzCoreDataset(Dataset):
         for path in self.npz_paths:
             if self.cache_data:
                 # Original behavior - load into memory
-                npz = np.load(path)
+                npz = np.load(resolve_npz_path(path))
                 X = npz['X'].astype(np.float32)  # (H, W, C)
             else:
                 # Memory-efficient: just check dimensions
-                npz = np.load(path, mmap_mode='r')
+                npz = np.load(resolve_npz_path(path), mmap_mode='r')
                 X = npz['X']  # Don't convert, just check shape
                 y = npz['y']  # Don't load yet
                 wn = npz['wn'][:]  # Small array, ok to load
@@ -170,7 +184,7 @@ class NpzCoreDataset(Dataset):
                 y = core['y']
             else:
                 # Load to get shape, tissue mask, and labels
-                npz = np.load(core['path'], mmap_mode='r')
+                npz = np.load(resolve_npz_path(core['path']), mmap_mode='r')
                 H, W = npz['y'].shape
                 tissue_mask = npz['tissue_mask'][:]
                 y = npz['y'][:]
@@ -262,7 +276,7 @@ class NpzCoreDataset(Dataset):
                 tissue_mask = core['tissue_mask'][i:i+self.patch_size, j:j+self.patch_size].copy()
             else:
                 # Lazy load from disk
-                npz = np.load(core['path'], mmap_mode='r')
+                npz = np.load(resolve_npz_path(core['path']), mmap_mode='r')
                 X = npz['X'][i:i+self.patch_size, j:j+self.patch_size].astype(np.float32)
                 y = npz['y'][i:i+self.patch_size, j:j+self.patch_size].astype(np.int64)
                 tissue_mask = npz['tissue_mask'][i:i+self.patch_size, j:j+self.patch_size].astype(np.uint8)
@@ -287,7 +301,7 @@ class NpzCoreDataset(Dataset):
                 tissue_mask = core['tissue_mask'].copy()
             else:
                 # Lazy load from disk
-                npz = np.load(core['path'], mmap_mode='r')
+                npz = np.load(resolve_npz_path(core['path']), mmap_mode='r')
                 X = npz['X'][:].astype(np.float32)
                 y = npz['y'][:].astype(np.int64)
                 tissue_mask = npz['tissue_mask'][:].astype(np.uint8)
@@ -314,7 +328,7 @@ class NpzCoreDataset(Dataset):
             self.wn = wn  # Cache for future use
         else:
             # Load from first core's NPZ file
-            npz = np.load(self.cores[0]['path'], mmap_mode='r')
+            npz = np.load(resolve_npz_path(self.cores[0]['path']), mmap_mode='r')
             wn = torch.from_numpy(npz['wn'][:].astype(np.float32))
             npz.close()
             self.wn = wn  # Cache for future use
@@ -437,7 +451,7 @@ def compute_class_weights(dataset: NpzCoreDataset,
             tissue_mask = core['tissue_mask']
         else:
             # Lazy load from disk
-            npz = np.load(core['path'], mmap_mode='r')
+            npz = np.load(resolve_npz_path(core['path']), mmap_mode='r')
             y = npz['y'][:]
             tissue_mask = npz['tissue_mask'][:]
             npz.close()

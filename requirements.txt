@@ -13,3 +13,4 @@ einops
 tqdm
 torchmetrics
 timm
+tensorboard
