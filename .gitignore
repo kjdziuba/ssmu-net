@@ -36,12 +36,12 @@ Thumbs.db
 */tensorboard/
 events.out.tfevents.*
 
-# Session reports (not needed for running)
-session_reports/
+# Local documentation (keep locally but don't push)
 SESSION_REPORT.md
 MEETING_REPORT.md
 GPU_HANDOVER.md
 setup_github.md
+# Keep session_reports for development documentation
 
 # Archive/test files
 archive/
