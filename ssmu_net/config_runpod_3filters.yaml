@@ -1,0 +1,85 @@
+# RunPod configuration with 3-filter SSMU-Net (biochemical vision analogy)
+# Dramatically reduced memory for attention pooling
+project_root: "."
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/models"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+# Data paths not needed - using preprocessed NPZ
+data:
+  seed: 1337
+  folds: 5
+  batch_size: 1  # Keep conservative
+  num_workers: 4
+  center_crop: 256  # Center crop cores to 256x256
+  patch_size: 128  # 2x2 non-overlapping patches per core
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+
+model:
+  sinc:
+    filters: 3  # REDUCED: Only 3 biochemical filters (like human color vision)
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba"
+    layers: 2  # Keep depth for learning spectral relationships
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  embed: 12  # REDUCED: Reasonable feature capacity (was 24)
+  unet:
+    base: 12  # REDUCED: Proportional scaling (was 24)
+  classes: 8
+  pooling: "attention"  # Should work fine with 3 filters!
+  chunk_size: 512  # Can afford larger chunks now
+
+loss:
+  seg:
+    dice: true
+    ce: true
+    class_weights: "inverse_freq"
+  sparsity:
+    alpha: 1.0e-4
+    beta: 1.0e-4
+    ramp_epochs: 10
+
+optim:
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  epochs: 120
+  scheduler: "cosine"
+  amp: true
+  grad_clip: 1.0
+  grad_accumulation: 1
+  deterministic: false  # Keep fast mode
+
+audits:
+  occlusion:
+    width_cm1: 15
+    stride_cm1: 5
+  jitter:
+    sigma_cm1: 3.0
+  holdout: ["slide_id", "block_id", "session_id"]
+
+dfir_export:
+  target_K: [3, 4, 6, 8]  # Adjusted for fewer filters
+  min_sep_cm1: 8.0
+  selection: "greedy_nonoverlap"
+  retrain_epochs: 30
+
+reporting:
+  figures: ["arch", "bands", "qualitative", "ablation", "band_vs_miou", "throughput"]
+  throughput:
+    overhead_ms: 150.0
+    per_band_ms: 12.0
+
+# Biochemical interpretation of the 3 filters:
+# Filter 1: Amide I region (~1650 cm⁻¹) - Protein α-helical content
+# Filter 2: Amide II region (~1550 cm⁻¹) - Protein β-sheet content  
+# Filter 3: Lipid ester region (~1740 cm⁻¹) - Membrane/lipid content
