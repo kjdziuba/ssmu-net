@@ -12,9 +12,10 @@ runtime_paths:
 data:
   seed: 1337
   folds: 5
-  batch_size: 1
-  num_workers: 0
-  patch_size: 128
+  batch_size: 4  # Keep batch_size 4 with 128x128 patches
+  num_workers: 4
+  center_crop: 256  # Center crop cores to 256x256 (set to null to disable)
+  patch_size: 128  # 2x2 non-overlapping patches per core
   spectral_range: [900, 1800]
   wax_gap: [1350, 1490]
 
@@ -54,8 +55,10 @@ optim:
   scheduler: "cosine"
   amp: true
   grad_clip: 1.0
-  # Add gradient accumulation for small batches
-  grad_accumulation: 4
+  # Set to 1 for stability with larger patches and batch_size=2
+  grad_accumulation: 1
+  # Disable deterministic algorithms for speed (still seeded for reproducibility)
+  deterministic: false
 
 audits:
   occlusion:

@@ -77,6 +77,7 @@ class NpzCoreDataset(Dataset):
                  ignore_index: int = -100,
                  z_mean: Optional[np.ndarray] = None,
                  z_std: Optional[np.ndarray] = None,
+                 center_crop: Optional[int] = None,
                  max_patches: Optional[int] = None,
                  max_patches_per_core: Optional[int] = None,
                  min_foreground_ratio: float = 0.0,
@@ -90,6 +91,7 @@ class NpzCoreDataset(Dataset):
             ignore_index: Label to ignore in loss computation
             z_mean: Channel-wise mean for z-score normalization
             z_std: Channel-wise std for z-score normalization
+            center_crop: Size to center crop cores to (e.g., 256)
             max_patches: DEPRECATED - use max_patches_per_core instead
             max_patches_per_core: Maximum patches to sample per core
             min_foreground_ratio: Minimum ratio of non-background pixels required
@@ -97,6 +99,7 @@ class NpzCoreDataset(Dataset):
         """
         self.npz_paths = [Path(p) for p in npz_paths]
         self.patch_size = patch_size
+        self.center_crop = center_crop
         self.mode = mode
         self.augment = augment and (mode == 'train')
         self.ignore_index = ignore_index
@@ -112,13 +115,39 @@ class NpzCoreDataset(Dataset):
         # Store paths only, load on demand to save memory
         self.cores = []
         self.metadata = []
-        self.cache_data = False  # Set to True only if you have enough RAM
+        self.cache_data = True  # Enable RAM caching
         
         for path in self.npz_paths:
             if self.cache_data:
                 # Original behavior - load into memory
                 npz = np.load(resolve_npz_path(path))
                 X = npz['X'].astype(np.float32)  # (H, W, C)
+                y = npz['y'].astype(np.int64)  # (H, W)
+                wn = npz['wn'][:]  # (C,)
+                tissue_mask = npz['tissue_mask'].astype(bool)  # (H, W)
+                delta_cm1 = float(npz['delta_cm1'])
+                
+                # Parse metadata
+                meta_str = npz['meta'].item() if isinstance(npz['meta'], np.ndarray) else str(npz['meta'])
+                try:
+                    meta = json.loads(meta_str)
+                except:
+                    meta = {'core_id': Path(path).stem}
+                
+                # Validate uniform grid
+                diffs = np.diff(wn)
+                assert np.allclose(diffs, delta_cm1, rtol=1e-6), \
+                    f"Non-uniform wn found in {path}; re-run preprocessing"
+                
+                # Apply center cropping if specified
+                if self.center_crop is not None:
+                    H, W = X.shape[:2]
+                    crop_size = min(H, W, self.center_crop)
+                    start_h = (H - crop_size) // 2
+                    start_w = (W - crop_size) // 2
+                    X = X[start_h:start_h+crop_size, start_w:start_w+crop_size]
+                    y = y[start_h:start_h+crop_size, start_w:start_w+crop_size]
+                    tissue_mask = tissue_mask[start_h:start_h+crop_size, start_w:start_w+crop_size]
             else:
                 # Memory-efficient: just check dimensions
                 npz = np.load(resolve_npz_path(path), mmap_mode='r')
@@ -127,6 +156,8 @@ class NpzCoreDataset(Dataset):
                 wn = npz['wn'][:]  # Small array, ok to load
                 tissue_mask = npz['tissue_mask']  # Don't load yet
                 delta_cm1 = float(npz['delta_cm1'])
+                
+                # Note: For memory-efficient mode, we'll apply cropping when actually loading patches
                 
                 # Parse metadata
                 meta_str = npz['meta'].item() if isinstance(npz['meta'], np.ndarray) else str(npz['meta'])
@@ -189,8 +220,8 @@ class NpzCoreDataset(Dataset):
                 tissue_mask = npz['tissue_mask'][:]
                 y = npz['y'][:]
             
-            # Sample patches with stride
-            stride = self.patch_size // 2  # 50% overlap
+            # Sample patches with stride (NO OVERLAP for training efficiency)
+            stride = self.patch_size  # Non-overlapping patches
             
             for i in range(0, H - self.patch_size + 1, stride):
                 for j in range(0, W - self.patch_size + 1, stride):
@@ -505,6 +536,7 @@ def create_dataloaders(cfg: Dict[str, Any],
         ignore_index=-100,
         z_mean=z_mean,
         z_std=z_std,
+        center_crop=cfg['data'].get('center_crop', None),
         max_patches=cfg['data'].get('max_patches', None),  # Backward compat
         max_patches_per_core=cfg['data'].get('max_patches_per_core_train', None),
         min_foreground_ratio=cfg['data'].get('min_foreground_ratio', 0.0),
@@ -519,6 +551,7 @@ def create_dataloaders(cfg: Dict[str, Any],
         ignore_index=-100,
         z_mean=z_mean,
         z_std=z_std,
+        center_crop=cfg['data'].get('center_crop', None),
         max_patches_per_core=cfg['data'].get('max_patches_per_core_val', None),
         min_foreground_ratio=0.0,  # No filtering for validation
         min_tissue_ratio=0.1  # Basic tissue check
@@ -560,7 +593,8 @@ def create_dataloaders(cfg: Dict[str, Any],
             augment=False,
             ignore_index=-100,
             z_mean=z_mean,
-            z_std=z_std
+            z_std=z_std,
+            center_crop=cfg['data'].get('center_crop', None)
         )
         
         test_loader = DataLoader(

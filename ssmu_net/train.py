@@ -49,7 +49,8 @@ class Trainer:
         self.writer = SummaryWriter(self.log_dir / 'tensorboard')
         
         # Set deterministic behavior after directories exist
-        set_deterministic(cfg['data']['seed'] + fold, str(self.log_dir))
+        deterministic = cfg['optim'].get('deterministic', True)  # Default to True for backward compatibility
+        set_deterministic(cfg['data']['seed'] + fold, str(self.log_dir), deterministic)
         
         # Training config
         self.epochs = cfg['optim']['epochs']

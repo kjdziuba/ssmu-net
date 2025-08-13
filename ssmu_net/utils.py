@@ -42,11 +42,12 @@ def ensure_dirs(cfg: Dict[str, Any]) -> Dict[str, str]:
     return cfg['runtime_paths']
 
 
-def set_deterministic(seed: int, log_dir: str) -> None:
+def set_deterministic(seed: int, log_dir: str, deterministic: bool = True) -> None:
     """Set all seeds with full logging for reproducibility"""
     # Set environment variables for determinism
     os.environ["PYTHONHASHSEED"] = str(seed)
-    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+    if deterministic:
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
     
     # Set seeds
     torch.manual_seed(seed)
@@ -55,10 +56,15 @@ def set_deterministic(seed: int, log_dir: str) -> None:
     random.seed(seed)
     
     # Set deterministic behavior
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    # Use warn_only mode to allow non-deterministic ops like 2D cross-entropy
-    torch.use_deterministic_algorithms(True, warn_only=True)
+    if deterministic:
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        # Use warn_only mode to allow non-deterministic ops like 2D cross-entropy
+        torch.use_deterministic_algorithms(True, warn_only=True)
+    else:
+        torch.backends.cudnn.deterministic = False
+        torch.backends.cudnn.benchmark = True
+        torch.use_deterministic_algorithms(False)
     
     # Save seeds to JSON
     seeds = {
@@ -67,10 +73,10 @@ def set_deterministic(seed: int, log_dir: str) -> None:
         'random': seed,
         'cuda': seed,
         'python_hash_seed': seed,
-        'cublas_workspace_config': ':16:8',
-        'cudnn_deterministic': True,
-        'cudnn_benchmark': False,
-        'use_deterministic_algorithms': True,
+        'cublas_workspace_config': ':16:8' if deterministic else 'not_set',
+        'cudnn_deterministic': deterministic,
+        'cudnn_benchmark': not deterministic,
+        'use_deterministic_algorithms': deterministic,
         'timestamp': str(np.datetime64('now'))
     }
     
@@ -78,7 +84,8 @@ def set_deterministic(seed: int, log_dir: str) -> None:
     with open(seeds_path, 'w') as f:
         json.dump(seeds, f, indent=2)
     
-    print(f"Deterministic mode enabled with seed {seed}")
+    mode = "Deterministic" if deterministic else "Non-deterministic (faster)"
+    print(f"{mode} mode enabled with seed {seed}")
     print(f"Seeds saved to {seeds_path}")
 
 
