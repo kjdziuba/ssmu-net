@@ -1,0 +1,87 @@
+project_root: "/Volumes/LaCie/breast_experiments/ssmu_net_project"
+
+runtime_paths:
+  npz: "outputs/npz"  # Main preprocessed data (4x more tissue)
+  models: "outputs/models"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+data:
+  raw_root: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL"
+  metadata_excel: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/metadata/BR2082_H260.xlsx"
+  annotations_dir: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/Annotations/BR2082_H260_annotations"
+  seed: 1337
+  folds: 5
+  batch_size: 4  # Can increase since we have fewer bands now
+  num_workers: 0
+  patch_size: 64
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]  # Will be removed, not interpolated
+
+preprocess:
+  method: "optimized"  # New optimized preprocessing
+  qc_mask:
+    band: [1600, 1700]  # Amide I region
+    threshold: 2.5      # Fixed threshold (validated on QCL data)
+  sg:
+    window: 11          # Optimized window size
+    polyorder: 5        # Higher order for better peak preservation
+    deriv: 2            # Second derivative (like pixel_pixel)
+  double_l2: true       # L2 before and after derivative
+
+model:
+  sinc:
+    filters: 24
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba"
+    layers: 2
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  spectral:
+    bands: 64
+    dim: 96
+  unet:
+    depths: [2, 2, 2, 2]
+    dims: [96, 192, 384, 768]
+    decoder_dims: [384, 192, 96, 48]
+  head:
+    hidden_dim: 128
+    dropout: 0.2
+  num_classes: 8
+
+train:
+  epochs: 100
+  lr: 0.0001
+  weight_decay: 0.01
+  scheduler:
+    type: "cosine"
+    warmup_epochs: 5
+    min_lr: 0.000001
+  loss:
+    type: "combined"
+    ce_weight: 1.0
+    dice_weight: 1.0
+    physics_weight: 0.1
+    ignore_index: 0  # Background class
+  val_interval: 1
+  save_interval: 10
+  early_stopping:
+    patience: 20
+    min_delta: 0.001
+  augmentation:
+    spatial_prob: 0.5
+    spectral_prob: 0.3
+  min_foreground_ratio: 0.01  # Can be lower since we have more tissue now
+  center_crop: 256  # For validation
+
+benchmarks:
+  models:
+    - "spectral_attention"
+    - "se_compressor"
+    - "unet_baseline"
+  compare_preprocessing: true  # Compare old vs new preprocessing

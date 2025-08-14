@@ -20,24 +20,15 @@ data:
   wax_gap: [1350, 1490]
 
 preprocess:
-  order: "A" # Ferguson-aligned (default), "B" for ablation
-  resample_uniform: true
+  method: "optimized"  # Use optimized preprocessing pipeline
   qc_mask:
-    band: [1600, 1700] # Amide I region
-    method: "quantile" # or "otsu"
-    quantile: 0.85
-  pre_norm:
-    type: "l2" # L2 normalization before derivative
+    band: [1600, 1700]  # Amide I region
+    threshold: 2.5      # Fixed threshold (validated on QCL data)
   sg:
-    window: 11
-    polyorder: 2
-    deriv: 1
-  post_norm:
-    type: "l2" # L2 normalization after derivative (or "snv")
-  zscore:
-    enabled: true
-  mean_center:
-    enabled: false
+    window: 11          # Optimal window size
+    polyorder: 5        # Higher order for better peak preservation
+    deriv: 2            # Second derivative (matches pixel_pixel)
+  double_l2: true       # L2 before and after derivative
 
 model:
   sinc:
