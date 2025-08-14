@@ -31,7 +31,11 @@ def compute_class_weights(train_dataset, num_classes=8):
     
     # Sample a subset of data to compute weights
     for i in range(min(100, len(train_dataset))):
-        _, y = train_dataset[i]
+        sample = train_dataset[i]
+        if isinstance(sample, dict):
+            y = sample['y']
+        else:
+            y = sample[1] if isinstance(sample, tuple) else sample
         for c in range(num_classes):
             class_counts[c] += (y == c).sum()
     
@@ -59,9 +63,14 @@ def train_epoch(model, loader, criterion_ce, criterion_dice, optimizer, device, 
     total_dice = 0
     
     pbar = tqdm(loader, desc="Training")
-    for X, y in pbar:
-        X = X.to(device)
-        y = y.to(device)
+    for batch in pbar:
+        if isinstance(batch, dict):
+            X = batch['X'].to(device)
+            y = batch['y'].to(device)
+        else:
+            X, y = batch[:2]  # Handle tuple returns
+            X = X.to(device)
+            y = y.to(device)
         
         optimizer.zero_grad()
         
@@ -104,9 +113,14 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
     
     with torch.no_grad():
         pbar = tqdm(loader, desc="Validation")
-        for X, y in pbar:
-            X = X.to(device)
-            y = y.to(device)
+        for batch in pbar:
+            if isinstance(batch, dict):
+                X = batch['X'].to(device)
+                y = batch['y'].to(device)
+            else:
+                X, y = batch[:2]
+                X = X.to(device)
+                y = y.to(device)
             
             # Forward pass
             logits = model(X)
@@ -152,20 +166,50 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='spectral_attention',
+    parser.add_argument('--config', type=str, default='ssmu_net/config_benchmark.yaml',
+                       help='Path to configuration file')
+    parser.add_argument('--model', type=str, default=None,
                        choices=['spectral_attention', 'se_unet', 'simple'],
-                       help='Model architecture to use')
-    parser.add_argument('--epochs', type=int, default=30,
-                       help='Number of training epochs')
-    parser.add_argument('--batch_size', type=int, default=4,
-                       help='Batch size')
-    parser.add_argument('--lr', type=float, default=1e-4,
-                       help='Learning rate')
-    parser.add_argument('--patch_size', type=int, default=64,
-                       help='Patch size for training')
-    parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
-                       help='Device to use')
+                       help='Model architecture to use (overrides config)')
+    parser.add_argument('--epochs', type=int, default=None,
+                       help='Number of training epochs (overrides config)')
+    parser.add_argument('--batch_size', type=int, default=None,
+                       help='Batch size (overrides config)')
+    parser.add_argument('--lr', type=float, default=None,
+                       help='Learning rate (overrides config)')
+    # Auto-detect best device (MPS for Mac, CUDA for GPU, CPU fallback)
+    if torch.backends.mps.is_available():
+        default_device = 'mps'
+    elif torch.cuda.is_available():
+        default_device = 'cuda'
+    else:
+        default_device = 'cpu'
+    
+    parser.add_argument('--device', type=str, default=default_device,
+                       help='Device to use (mps/cuda/cpu)')
     args = parser.parse_args()
+    
+    # Load config
+    import yaml
+    with open(args.config, 'r') as f:
+        cfg = yaml.safe_load(f)
+    
+    # Override config with command line args
+    if args.model:
+        cfg['benchmark']['model_name'] = args.model
+    if args.epochs:
+        cfg['optim']['epochs'] = args.epochs
+    if args.batch_size:
+        cfg['data']['batch_size'] = args.batch_size
+    if args.lr:
+        cfg['optim']['lr'] = args.lr
+    
+    # Extract values from config
+    args.model = cfg['benchmark']['model_name']
+    args.epochs = cfg['optim']['epochs']
+    args.batch_size = cfg['data']['batch_size']
+    args.lr = cfg['optim']['lr']
+    args.patch_size = cfg['data']['patch_size']
     
     print(f"\n{'='*60}")
     print(f"Training Benchmark Model: {args.model}")
@@ -182,32 +226,35 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Load datasets
-    npz_dir = "outputs/npz"
-    
-    # Create config for dataset
-    data_cfg = {
-        'patch_size': args.patch_size,
-        'spectral_range': [900, 1800],
-        'wax_gap': [1350, 1490]
-    }
+    npz_dir = cfg['runtime_paths']['npz']
     
     print("Loading datasets...")
+    
+    # Get NPZ files
+    import glob
+    npz_files = sorted(glob.glob(os.path.join(npz_dir, "core_*.npz")))
+    
+    # Split into train/val (80/20)
+    n_train = int(0.8 * len(npz_files))
+    train_files = npz_files[:n_train]
+    val_files = npz_files[n_train:]
+    
     train_dataset = NpzCoreDataset(
-        npz_dir=npz_dir,
-        cfg=data_cfg,
+        npz_paths=train_files,
+        patch_size=cfg['data']['patch_size'],
         mode='train',
         augment=True,
-        ignore_index=0,  # CRITICAL: Ignore background!
-        max_patches_per_core=50
+        ignore_index=cfg['data']['ignore_index'],
+        max_patches_per_core=cfg.get('sampling', {}).get('max_patches_per_core_train', 50)
     )
     
     val_dataset = NpzCoreDataset(
-        npz_dir=npz_dir,
-        cfg=data_cfg,
+        npz_paths=val_files,
+        patch_size=cfg['data']['patch_size'],
         mode='val',
         augment=False,
-        ignore_index=0,  # CRITICAL: Ignore background!
-        max_patches_per_core=10
+        ignore_index=cfg['data']['ignore_index'],
+        max_patches_per_core=cfg.get('sampling', {}).get('max_patches_per_core_val', 10)
     )
     
     print(f"Train samples: {len(train_dataset)}")
@@ -231,8 +278,11 @@ def main():
     )
     
     # Get number of channels from data
-    sample_x, _ = train_dataset[0]
-    in_channels = sample_x.shape[0]
+    sample = train_dataset[0]
+    if isinstance(sample, dict):
+        in_channels = sample['X'].shape[0]
+    else:
+        in_channels = sample[0].shape[0] if isinstance(sample, tuple) else sample.shape[0]
     print(f"Input channels: {in_channels}")
     
     # Create model

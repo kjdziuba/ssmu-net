@@ -1,0 +1,1606 @@
+[
+  {
+    "core_name": "core_C10",
+    "image_path": "outputs/validation/core_C10_validation.png",
+    "shape": "(331, 330)",
+    "non_bg_pct": 18.705483841435502,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C11",
+    "image_path": "outputs/validation/core_C11_validation.png",
+    "shape": "(320, 310)",
+    "non_bg_pct": 6.934475806451614,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C12",
+    "image_path": "outputs/validation/core_C12_validation.png",
+    "shape": "(321, 313)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_C13",
+    "image_path": "outputs/validation/core_C13_validation.png",
+    "shape": "(325, 341)",
+    "non_bg_pct": 4.157906609519513,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C14",
+    "image_path": "outputs/validation/core_C14_validation.png",
+    "shape": "(333, 319)",
+    "non_bg_pct": 4.646652922514991,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C15",
+    "image_path": "outputs/validation/core_C15_validation.png",
+    "shape": "(328, 327)",
+    "non_bg_pct": 15.34739315283061,
+    "unique_classes": "[0, 3, 4, 6]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C16",
+    "image_path": "outputs/validation/core_C16_validation.png",
+    "shape": "(338, 341)",
+    "non_bg_pct": 2.043242117683805,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C2",
+    "image_path": "outputs/validation/core_C2_validation.png",
+    "shape": "(320, 326)",
+    "non_bg_pct": 5.196510736196319,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C3",
+    "image_path": "outputs/validation/core_C3_validation.png",
+    "shape": "(324, 337)",
+    "non_bg_pct": 4.650694215481554,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C4",
+    "image_path": "outputs/validation/core_C4_validation.png",
+    "shape": "(320, 306)",
+    "non_bg_pct": 14.507761437908497,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C5",
+    "image_path": "outputs/validation/core_C5_validation.png",
+    "shape": "(323, 323)",
+    "non_bg_pct": 2.4949918047714443,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C6",
+    "image_path": "outputs/validation/core_C6_validation.png",
+    "shape": "(326, 325)",
+    "non_bg_pct": 0.9476168003775366,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_C7",
+    "image_path": "outputs/validation/core_C7_validation.png",
+    "shape": "(328, 323)",
+    "non_bg_pct": 5.705844597145662,
+    "unique_classes": "[0, 1, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_C8",
+    "image_path": "outputs/validation/core_C8_validation.png",
+    "shape": "(322, 315)",
+    "non_bg_pct": 0.8094252193631076,
+    "unique_classes": "[0, 4]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_C9",
+    "image_path": "outputs/validation/core_C9_validation.png",
+    "shape": "(318, 326)",
+    "non_bg_pct": 0.8372882663888568,
+    "unique_classes": "[0, 4]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_D10",
+    "image_path": "outputs/validation/core_D10_validation.png",
+    "shape": "(314, 324)",
+    "non_bg_pct": 3.801014390186365,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D11",
+    "image_path": "outputs/validation/core_D11_validation.png",
+    "shape": "(328, 324)",
+    "non_bg_pct": 6.471130683529057,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D12",
+    "image_path": "outputs/validation/core_D12_validation.png",
+    "shape": "(311, 321)",
+    "non_bg_pct": 4.676903967705423,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D13",
+    "image_path": "outputs/validation/core_D13_validation.png",
+    "shape": "(328, 327)",
+    "non_bg_pct": 27.65719400313269,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D14",
+    "image_path": "outputs/validation/core_D14_validation.png",
+    "shape": "(341, 323)",
+    "non_bg_pct": 27.06753947141443,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D15",
+    "image_path": "outputs/validation/core_D15_validation.png",
+    "shape": "(314, 316)",
+    "non_bg_pct": 5.671007014431993,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D16",
+    "image_path": "outputs/validation/core_D16_validation.png",
+    "shape": "(308, 335)",
+    "non_bg_pct": 3.805970149253731,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D2",
+    "image_path": "outputs/validation/core_D2_validation.png",
+    "shape": "(329, 347)",
+    "non_bg_pct": 3.1840438671023015,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D3",
+    "image_path": "outputs/validation/core_D3_validation.png",
+    "shape": "(318, 318)",
+    "non_bg_pct": 1.6445156441596456,
+    "unique_classes": "[0, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D4",
+    "image_path": "outputs/validation/core_D4_validation.png",
+    "shape": "(305, 325)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_D5",
+    "image_path": "outputs/validation/core_D5_validation.png",
+    "shape": "(313, 319)",
+    "non_bg_pct": 1.564393522088796,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D6",
+    "image_path": "outputs/validation/core_D6_validation.png",
+    "shape": "(326, 316)",
+    "non_bg_pct": 2.362739768579638,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D7",
+    "image_path": "outputs/validation/core_D7_validation.png",
+    "shape": "(325, 319)",
+    "non_bg_pct": 4.812153363877502,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D8",
+    "image_path": "outputs/validation/core_D8_validation.png",
+    "shape": "(346, 330)",
+    "non_bg_pct": 1.8356980206691191,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_D9",
+    "image_path": "outputs/validation/core_D9_validation.png",
+    "shape": "(311, 333)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_E10",
+    "image_path": "outputs/validation/core_E10_validation.png",
+    "shape": "(320, 331)",
+    "non_bg_pct": 9.301359516616314,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E11",
+    "image_path": "outputs/validation/core_E11_validation.png",
+    "shape": "(312, 348)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_E12",
+    "image_path": "outputs/validation/core_E12_validation.png",
+    "shape": "(311, 311)",
+    "non_bg_pct": 10.530288148385562,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E13",
+    "image_path": "outputs/validation/core_E13_validation.png",
+    "shape": "(313, 330)",
+    "non_bg_pct": 12.279988382224804,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E14",
+    "image_path": "outputs/validation/core_E14_validation.png",
+    "shape": "(333, 332)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_E15",
+    "image_path": "outputs/validation/core_E15_validation.png",
+    "shape": "(314, 324)",
+    "non_bg_pct": 21.18030982149878,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E16",
+    "image_path": "outputs/validation/core_E16_validation.png",
+    "shape": "(333, 313)",
+    "non_bg_pct": 3.998887065979718,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E2",
+    "image_path": "outputs/validation/core_E2_validation.png",
+    "shape": "(316, 324)",
+    "non_bg_pct": 17.07005000781372,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E3",
+    "image_path": "outputs/validation/core_E3_validation.png",
+    "shape": "(321, 328)",
+    "non_bg_pct": 5.113593192006687,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E4",
+    "image_path": "outputs/validation/core_E4_validation.png",
+    "shape": "(321, 309)",
+    "non_bg_pct": 9.545413301878233,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E5",
+    "image_path": "outputs/validation/core_E5_validation.png",
+    "shape": "(329, 335)",
+    "non_bg_pct": 10.986707798394049,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E6",
+    "image_path": "outputs/validation/core_E6_validation.png",
+    "shape": "(312, 336)",
+    "non_bg_pct": 4.283043345543345,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E7",
+    "image_path": "outputs/validation/core_E7_validation.png",
+    "shape": "(328, 327)",
+    "non_bg_pct": 13.166629372715747,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E8",
+    "image_path": "outputs/validation/core_E8_validation.png",
+    "shape": "(341, 318)",
+    "non_bg_pct": 13.23429056234899,
+    "unique_classes": "[0, 3, 4, 6]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_E9",
+    "image_path": "outputs/validation/core_E9_validation.png",
+    "shape": "(322, 317)",
+    "non_bg_pct": 6.666731978760507,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F10",
+    "image_path": "outputs/validation/core_F10_validation.png",
+    "shape": "(321, 331)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F11",
+    "image_path": "outputs/validation/core_F11_validation.png",
+    "shape": "(311, 319)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F12",
+    "image_path": "outputs/validation/core_F12_validation.png",
+    "shape": "(306, 321)",
+    "non_bg_pct": 10.496202634740293,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F13",
+    "image_path": "outputs/validation/core_F13_validation.png",
+    "shape": "(321, 318)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F14",
+    "image_path": "outputs/validation/core_F14_validation.png",
+    "shape": "(321, 312)",
+    "non_bg_pct": 7.869039060627846,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F15",
+    "image_path": "outputs/validation/core_F15_validation.png",
+    "shape": "(328, 323)",
+    "non_bg_pct": 6.881937627425811,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F16",
+    "image_path": "outputs/validation/core_F16_validation.png",
+    "shape": "(320, 308)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F2",
+    "image_path": "outputs/validation/core_F2_validation.png",
+    "shape": "(313, 316)",
+    "non_bg_pct": 4.756945848667449,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F3",
+    "image_path": "outputs/validation/core_F3_validation.png",
+    "shape": "(318, 316)",
+    "non_bg_pct": 3.969628214314147,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F4",
+    "image_path": "outputs/validation/core_F4_validation.png",
+    "shape": "(310, 333)",
+    "non_bg_pct": 16.270464012399497,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F5",
+    "image_path": "outputs/validation/core_F5_validation.png",
+    "shape": "(314, 307)",
+    "non_bg_pct": 2.1266001369323018,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F6",
+    "image_path": "outputs/validation/core_F6_validation.png",
+    "shape": "(318, 318)",
+    "non_bg_pct": 0.9631739250820774,
+    "unique_classes": "[0, 7]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F7",
+    "image_path": "outputs/validation/core_F7_validation.png",
+    "shape": "(319, 343)",
+    "non_bg_pct": 0.6562051600756738,
+    "unique_classes": "[0, 3]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_F8",
+    "image_path": "outputs/validation/core_F8_validation.png",
+    "shape": "(318, 315)",
+    "non_bg_pct": 5.140261555355894,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_F9",
+    "image_path": "outputs/validation/core_F9_validation.png",
+    "shape": "(320, 322)",
+    "non_bg_pct": 4.476902173913044,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_G10",
+    "image_path": "outputs/validation/core_G10_validation.png",
+    "shape": "(326, 333)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G11",
+    "image_path": "outputs/validation/core_G11_validation.png",
+    "shape": "(322, 317)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G12",
+    "image_path": "outputs/validation/core_G12_validation.png",
+    "shape": "(317, 325)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G13",
+    "image_path": "outputs/validation/core_G13_validation.png",
+    "shape": "(316, 319)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G14",
+    "image_path": "outputs/validation/core_G14_validation.png",
+    "shape": "(309, 324)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G15",
+    "image_path": "outputs/validation/core_G15_validation.png",
+    "shape": "(296, 324)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G16",
+    "image_path": "outputs/validation/core_G16_validation.png",
+    "shape": "(287, 325)",
+    "non_bg_pct": 6.062717770034843,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_G2",
+    "image_path": "outputs/validation/core_G2_validation.png",
+    "shape": "(312, 325)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G3",
+    "image_path": "outputs/validation/core_G3_validation.png",
+    "shape": "(316, 333)",
+    "non_bg_pct": 8.802790131904056,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_G4",
+    "image_path": "outputs/validation/core_G4_validation.png",
+    "shape": "(324, 334)",
+    "non_bg_pct": 0.9018999038959119,
+    "unique_classes": "[0, 3]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G5",
+    "image_path": "outputs/validation/core_G5_validation.png",
+    "shape": "(319, 304)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G6",
+    "image_path": "outputs/validation/core_G6_validation.png",
+    "shape": "(319, 317)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G7",
+    "image_path": "outputs/validation/core_G7_validation.png",
+    "shape": "(332, 325)",
+    "non_bg_pct": 0.6728452270620945,
+    "unique_classes": "[0, 7]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_G8",
+    "image_path": "outputs/validation/core_G8_validation.png",
+    "shape": "(324, 334)",
+    "non_bg_pct": 1.4923855991720263,
+    "unique_classes": "[0, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_G9",
+    "image_path": "outputs/validation/core_G9_validation.png",
+    "shape": "(318, 333)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H10",
+    "image_path": "outputs/validation/core_H10_validation.png",
+    "shape": "(330, 317)",
+    "non_bg_pct": 0.5095115189752414,
+    "unique_classes": "[0, 7]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H11",
+    "image_path": "outputs/validation/core_H11_validation.png",
+    "shape": "(330, 333)",
+    "non_bg_pct": 4.498134498134498,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H12",
+    "image_path": "outputs/validation/core_H12_validation.png",
+    "shape": "(320, 335)",
+    "non_bg_pct": 2.1632462686567164,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H13",
+    "image_path": "outputs/validation/core_H13_validation.png",
+    "shape": "(336, 340)",
+    "non_bg_pct": 2.2015056022408963,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H14",
+    "image_path": "outputs/validation/core_H14_validation.png",
+    "shape": "(328, 308)",
+    "non_bg_pct": 7.628880266075388,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H15",
+    "image_path": "outputs/validation/core_H15_validation.png",
+    "shape": "(327, 323)",
+    "non_bg_pct": 11.044205224339857,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H16",
+    "image_path": "outputs/validation/core_H16_validation.png",
+    "shape": "(331, 339)",
+    "non_bg_pct": 7.26857916922885,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_H2",
+    "image_path": "outputs/validation/core_H2_validation.png",
+    "shape": "(302, 325)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H3",
+    "image_path": "outputs/validation/core_H3_validation.png",
+    "shape": "(302, 322)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H4",
+    "image_path": "outputs/validation/core_H4_validation.png",
+    "shape": "(312, 339)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H5",
+    "image_path": "outputs/validation/core_H5_validation.png",
+    "shape": "(313, 312)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H6",
+    "image_path": "outputs/validation/core_H6_validation.png",
+    "shape": "(304, 313)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H7",
+    "image_path": "outputs/validation/core_H7_validation.png",
+    "shape": "(307, 319)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H8",
+    "image_path": "outputs/validation/core_H8_validation.png",
+    "shape": "(325, 332)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_H9",
+    "image_path": "outputs/validation/core_H9_validation.png",
+    "shape": "(335, 315)",
+    "non_bg_pct": 0.42075337597725654,
+    "unique_classes": "[0, 7]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_I10",
+    "image_path": "outputs/validation/core_I10_validation.png",
+    "shape": "(324, 305)",
+    "non_bg_pct": 1.1080752884031573,
+    "unique_classes": "[0, 3, 5]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I11",
+    "image_path": "outputs/validation/core_I11_validation.png",
+    "shape": "(331, 326)",
+    "non_bg_pct": 2.1704075769651365,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I12",
+    "image_path": "outputs/validation/core_I12_validation.png",
+    "shape": "(328, 317)",
+    "non_bg_pct": 14.337924136339156,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I13",
+    "image_path": "outputs/validation/core_I13_validation.png",
+    "shape": "(315, 319)",
+    "non_bg_pct": 2.526745285365975,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I14",
+    "image_path": "outputs/validation/core_I14_validation.png",
+    "shape": "(343, 347)",
+    "non_bg_pct": 2.422261617697717,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I15",
+    "image_path": "outputs/validation/core_I15_validation.png",
+    "shape": "(334, 348)",
+    "non_bg_pct": 2.427902815059536,
+    "unique_classes": "[0, 3, 4, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I16",
+    "image_path": "outputs/validation/core_I16_validation.png",
+    "shape": "(317, 303)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_I2",
+    "image_path": "outputs/validation/core_I2_validation.png",
+    "shape": "(335, 331)",
+    "non_bg_pct": 5.959327230914912,
+    "unique_classes": "[0, 3, 4, 6, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I3",
+    "image_path": "outputs/validation/core_I3_validation.png",
+    "shape": "(337, 351)",
+    "non_bg_pct": 15.759973623475107,
+    "unique_classes": "[0, 3, 4, 6, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I4",
+    "image_path": "outputs/validation/core_I4_validation.png",
+    "shape": "(328, 323)",
+    "non_bg_pct": 7.348221702031261,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I5",
+    "image_path": "outputs/validation/core_I5_validation.png",
+    "shape": "(343, 335)",
+    "non_bg_pct": 11.140507375658153,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I6",
+    "image_path": "outputs/validation/core_I6_validation.png",
+    "shape": "(331, 327)",
+    "non_bg_pct": 15.117750861535335,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I7",
+    "image_path": "outputs/validation/core_I7_validation.png",
+    "shape": "(337, 324)",
+    "non_bg_pct": 28.261347400813275,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I8",
+    "image_path": "outputs/validation/core_I8_validation.png",
+    "shape": "(310, 327)",
+    "non_bg_pct": 14.061359376541382,
+    "unique_classes": "[0, 3]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_I9",
+    "image_path": "outputs/validation/core_I9_validation.png",
+    "shape": "(335, 338)",
+    "non_bg_pct": 21.271747770025613,
+    "unique_classes": "[0, 3, 4, 6]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J10",
+    "image_path": "outputs/validation/core_J10_validation.png",
+    "shape": "(331, 324)",
+    "non_bg_pct": 3.5162806310842565,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J11",
+    "image_path": "outputs/validation/core_J11_validation.png",
+    "shape": "(329, 323)",
+    "non_bg_pct": 7.07745584235934,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J12",
+    "image_path": "outputs/validation/core_J12_validation.png",
+    "shape": "(330, 331)",
+    "non_bg_pct": 3.277487869632885,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J13",
+    "image_path": "outputs/validation/core_J13_validation.png",
+    "shape": "(328, 329)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_J14",
+    "image_path": "outputs/validation/core_J14_validation.png",
+    "shape": "(322, 338)",
+    "non_bg_pct": 4.323936932632585,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J15",
+    "image_path": "outputs/validation/core_J15_validation.png",
+    "shape": "(326, 334)",
+    "non_bg_pct": 3.118915543146835,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J16",
+    "image_path": "outputs/validation/core_J16_validation.png",
+    "shape": "(318, 336)",
+    "non_bg_pct": 1.0875262054507338,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J2",
+    "image_path": "outputs/validation/core_J2_validation.png",
+    "shape": "(327, 330)",
+    "non_bg_pct": 8.339356871466963,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J3",
+    "image_path": "outputs/validation/core_J3_validation.png",
+    "shape": "(320, 331)",
+    "non_bg_pct": 7.931457703927493,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J4",
+    "image_path": "outputs/validation/core_J4_validation.png",
+    "shape": "(321, 319)",
+    "non_bg_pct": 3.6416371253625526,
+    "unique_classes": "[0, 3, 4]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_J9",
+    "image_path": "outputs/validation/core_J9_validation.png",
+    "shape": "(319, 347)",
+    "non_bg_pct": 1.1455105562230674,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K10",
+    "image_path": "outputs/validation/core_K10_validation.png",
+    "shape": "(316, 308)",
+    "non_bg_pct": 3.460463587045866,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K11",
+    "image_path": "outputs/validation/core_K11_validation.png",
+    "shape": "(320, 323)",
+    "non_bg_pct": 8.780959752321982,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K12",
+    "image_path": "outputs/validation/core_K12_validation.png",
+    "shape": "(317, 329)",
+    "non_bg_pct": 1.9675337750376343,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K13",
+    "image_path": "outputs/validation/core_K13_validation.png",
+    "shape": "(337, 334)",
+    "non_bg_pct": 2.12868032481032,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K14",
+    "image_path": "outputs/validation/core_K14_validation.png",
+    "shape": "(309, 314)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_K15",
+    "image_path": "outputs/validation/core_K15_validation.png",
+    "shape": "(311, 324)",
+    "non_bg_pct": 1.260370767337541,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K16",
+    "image_path": "outputs/validation/core_K16_validation.png",
+    "shape": "(315, 327)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_K2",
+    "image_path": "outputs/validation/core_K2_validation.png",
+    "shape": "(331, 365)",
+    "non_bg_pct": 8.310226379174772,
+    "unique_classes": "[0, 1, 2, 5]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K3",
+    "image_path": "outputs/validation/core_K3_validation.png",
+    "shape": "(313, 301)",
+    "non_bg_pct": 3.423094477407576,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K4",
+    "image_path": "outputs/validation/core_K4_validation.png",
+    "shape": "(314, 296)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_K5",
+    "image_path": "outputs/validation/core_K5_validation.png",
+    "shape": "(312, 307)",
+    "non_bg_pct": 4.0956735989309285,
+    "unique_classes": "[0, 1]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K6",
+    "image_path": "outputs/validation/core_K6_validation.png",
+    "shape": "(321, 323)",
+    "non_bg_pct": 1.2827560930914421,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K7",
+    "image_path": "outputs/validation/core_K7_validation.png",
+    "shape": "(325, 310)",
+    "non_bg_pct": 1.9890818858560793,
+    "unique_classes": "[0, 2, 5]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_K8",
+    "image_path": "outputs/validation/core_K8_validation.png",
+    "shape": "(325, 313)",
+    "non_bg_pct": 0.9466699434750554,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_K9",
+    "image_path": "outputs/validation/core_K9_validation.png",
+    "shape": "(318, 318)",
+    "non_bg_pct": 0.22151022507021084,
+    "unique_classes": "[0, 2]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L10",
+    "image_path": "outputs/validation/core_L10_validation.png",
+    "shape": "(330, 319)",
+    "non_bg_pct": 8.008929419587727,
+    "unique_classes": "[0, 2, 5, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L11",
+    "image_path": "outputs/validation/core_L11_validation.png",
+    "shape": "(332, 321)",
+    "non_bg_pct": 5.369140111849266,
+    "unique_classes": "[0, 1, 2, 5]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L12",
+    "image_path": "outputs/validation/core_L12_validation.png",
+    "shape": "(333, 307)",
+    "non_bg_pct": 4.022263305650927,
+    "unique_classes": "[0, 2, 5, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L13",
+    "image_path": "outputs/validation/core_L13_validation.png",
+    "shape": "(310, 298)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L14",
+    "image_path": "outputs/validation/core_L14_validation.png",
+    "shape": "(318, 335)",
+    "non_bg_pct": 3.9791607997747116,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L15",
+    "image_path": "outputs/validation/core_L15_validation.png",
+    "shape": "(309, 305)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L16",
+    "image_path": "outputs/validation/core_L16_validation.png",
+    "shape": "(340, 320)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L2",
+    "image_path": "outputs/validation/core_L2_validation.png",
+    "shape": "(317, 304)",
+    "non_bg_pct": 2.631578947368421,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L3",
+    "image_path": "outputs/validation/core_L3_validation.png",
+    "shape": "(266, 311)",
+    "non_bg_pct": 4.599521311316877,
+    "unique_classes": "[0, 2, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L4",
+    "image_path": "outputs/validation/core_L4_validation.png",
+    "shape": "(323, 301)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L5",
+    "image_path": "outputs/validation/core_L5_validation.png",
+    "shape": "(328, 349)",
+    "non_bg_pct": 0.9111398420574464,
+    "unique_classes": "[0, 7]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L6",
+    "image_path": "outputs/validation/core_L6_validation.png",
+    "shape": "(325, 335)",
+    "non_bg_pct": 1.3621125143513202,
+    "unique_classes": "[0, 2, 7]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L7",
+    "image_path": "outputs/validation/core_L7_validation.png",
+    "shape": "(327, 321)",
+    "non_bg_pct": 1.365190964779407,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_L8",
+    "image_path": "outputs/validation/core_L8_validation.png",
+    "shape": "(281, 302)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_L9",
+    "image_path": "outputs/validation/core_L9_validation.png",
+    "shape": "(326, 325)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M10",
+    "image_path": "outputs/validation/core_M10_validation.png",
+    "shape": "(323, 336)",
+    "non_bg_pct": 2.089783281733746,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M11",
+    "image_path": "outputs/validation/core_M11_validation.png",
+    "shape": "(360, 321)",
+    "non_bg_pct": 2.107995846313603,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M12",
+    "image_path": "outputs/validation/core_M12_validation.png",
+    "shape": "(329, 314)",
+    "non_bg_pct": 1.7540123516543087,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M13",
+    "image_path": "outputs/validation/core_M13_validation.png",
+    "shape": "(334, 337)",
+    "non_bg_pct": 2.0833703512855593,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M14",
+    "image_path": "outputs/validation/core_M14_validation.png",
+    "shape": "(327, 310)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M15",
+    "image_path": "outputs/validation/core_M15_validation.png",
+    "shape": "(312, 310)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M16",
+    "image_path": "outputs/validation/core_M16_validation.png",
+    "shape": "(342, 312)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M2",
+    "image_path": "outputs/validation/core_M2_validation.png",
+    "shape": "(244, 321)",
+    "non_bg_pct": 2.8509779888667586,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M3",
+    "image_path": "outputs/validation/core_M3_validation.png",
+    "shape": "(332, 325)",
+    "non_bg_pct": 2.8822984244670993,
+    "unique_classes": "[0, 1, 2]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M4",
+    "image_path": "outputs/validation/core_M4_validation.png",
+    "shape": "(326, 332)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M5",
+    "image_path": "outputs/validation/core_M5_validation.png",
+    "shape": "(311, 296)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M6",
+    "image_path": "outputs/validation/core_M6_validation.png",
+    "shape": "(317, 316)",
+    "non_bg_pct": 2.4707503094677152,
+    "unique_classes": "[0, 1, 2, 5]",
+    "issues": [],
+    "has_issues": false
+  },
+  {
+    "core_name": "core_M7",
+    "image_path": "outputs/validation/core_M7_validation.png",
+    "shape": "(334, 323)",
+    "non_bg_pct": 0.0,
+    "unique_classes": "[0]",
+    "issues": [
+      "No annotations",
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M8",
+    "image_path": "outputs/validation/core_M8_validation.png",
+    "shape": "(322, 312)",
+    "non_bg_pct": 0.10053352444656792,
+    "unique_classes": "[0, 5]",
+    "issues": [
+      "Very few annotations"
+    ],
+    "has_issues": true
+  },
+  {
+    "core_name": "core_M9",
+    "image_path": "outputs/validation/core_M9_validation.png",
+    "shape": "(313, 325)",
+    "non_bg_pct": 8.267387564512166,
+    "unique_classes": "[0, 2]",
+    "issues": [],
+    "has_issues": false
+  }
+]

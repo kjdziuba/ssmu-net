@@ -20,6 +20,8 @@ data:
   spectral_range: [900, 1800]
   wax_gap: [1350, 1490]
   ignore_index: 0   # CRITICAL FIX: Ignore background (class 0), not -100!
+  min_foreground_ratio: 0.1  # Require at least 10% non-background pixels to avoid NaN
+  min_tissue_ratio: 0.2  # Require at least 20% tissue coverage
 
 model:
   sinc:

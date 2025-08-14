@@ -80,7 +80,7 @@ class NpzCoreDataset(Dataset):
                  center_crop: Optional[int] = None,
                  max_patches: Optional[int] = None,
                  max_patches_per_core: Optional[int] = None,
-                 min_foreground_ratio: float = 0.0,
+                 min_foreground_ratio: float = 0.1,
                  min_tissue_ratio: float = 0.1):
         """
         Args:
@@ -321,6 +321,13 @@ class NpzCoreDataset(Dataset):
             # Set non-tissue pixels to ignore_index
             y[tissue_mask == 0] = self.ignore_index
             
+            # Safety check: ensure patch has some non-ignored pixels
+            # This prevents NaN losses when all pixels are background
+            if self.ignore_index == 0 and (y != self.ignore_index).sum() == 0:
+                # Patch is all background - sample a different patch
+                # Use modulo to wrap around if we reach the end
+                return self.__getitem__((idx + 1) % len(self))
+            
         else:
             # Return full core for evaluation
             core_idx = idx
@@ -539,7 +546,7 @@ def create_dataloaders(cfg: Dict[str, Any],
         center_crop=cfg['data'].get('center_crop', None),
         max_patches=cfg['data'].get('max_patches', None),  # Backward compat
         max_patches_per_core=cfg['data'].get('max_patches_per_core_train', None),
-        min_foreground_ratio=cfg['data'].get('min_foreground_ratio', 0.0),
+        min_foreground_ratio=cfg['data'].get('min_foreground_ratio', 0.1),
         min_tissue_ratio=cfg['data'].get('min_tissue_ratio', 0.1)
     )
     
@@ -553,7 +560,7 @@ def create_dataloaders(cfg: Dict[str, Any],
         z_std=z_std,
         center_crop=cfg['data'].get('center_crop', None),
         max_patches_per_core=cfg['data'].get('max_patches_per_core_val', None),
-        min_foreground_ratio=0.0,  # No filtering for validation
+        min_foreground_ratio=0.05,  # Minimal filtering to avoid all-background patches
         min_tissue_ratio=0.1  # Basic tissue check
     )
     

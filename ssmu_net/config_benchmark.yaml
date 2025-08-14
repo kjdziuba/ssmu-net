@@ -1,0 +1,54 @@
+# Configuration for benchmark models (SpectralAttention, SECompressor)
+# Based on successful pixel_pixel experiments that achieved 0.9 mIoU
+
+project_root: "."
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/benchmark"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+data:
+  seed: 1337
+  folds: 3
+  batch_size: 4
+  num_workers: 2
+  patch_size: 64  # Proven optimal size from pixel_pixel
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+  ignore_index: 0  # CRITICAL: Ignore background pixels
+  min_foreground_ratio: 0.1  # Avoid all-background patches that cause NaN
+  min_tissue_ratio: 0.2
+
+# Model selection for benchmark
+benchmark:
+  model_name: "spectral_attention"  # Options: spectral_attention, se_unet, simple
+  in_channels: 425  # Will be auto-detected from data
+  num_classes: 8
+
+# Training settings from successful experiments
+optim:
+  lr: 1.0e-4
+  weight_decay: 1.0e-2
+  epochs: 30
+  scheduler: "cosine"
+  amp: false  # Disable for stability on Mac
+  grad_clip: 1.0
+
+# Loss settings matching pixel_pixel
+loss:
+  ce_weight: 0.5
+  dice_weight: 0.5
+  class_weights: "computed"  # Compute from data distribution
+
+# Data sampling
+sampling:
+  max_patches_per_core_train: 50  # Like pixel_pixel
+  max_patches_per_core_val: 10
+  min_foreground_ratio: 0.1  # Ensure meaningful patches
+
+reporting:
+  save_every: 5  # Save checkpoint every N epochs
+  log_metrics: true

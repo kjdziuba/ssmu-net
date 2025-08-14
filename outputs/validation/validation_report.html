@@ -1,0 +1,2133 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Data Validation Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { color: #333; }
+            .summary { background: #f0f0f0; padding: 15px; margin: 20px 0; border-radius: 5px; }
+            .warning { color: #ff6600; font-weight: bold; }
+            .success { color: #00aa00; font-weight: bold; }
+            .core-section { margin: 30px 0; border-top: 2px solid #ccc; padding-top: 20px; }
+            img { max-width: 100%; height: auto; border: 1px solid #ddd; }
+            .stats-table { border-collapse: collapse; width: 100%; }
+            .stats-table th, .stats-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            .stats-table th { background-color: #f2f2f2; }
+        </style>
+    </head>
+    <body>
+        <h1>NPZ Data Validation Report</h1>
+    
+    <div class="summary">
+        <h2>Summary</h2>
+        <p>Total cores processed: <b>161</b></p>
+        <p>Cores with issues: <span class="warning">56</span></p>
+    </div>
+    
+    <h2>Overall Statistics</h2>
+    <table class="stats-table">
+        <tr>
+            <th>Core</th>
+            <th>Shape</th>
+            <th>Non-background %</th>
+            <th>Unique Classes</th>
+            <th>Issues</th>
+        </tr>
+    
+        <tr>
+            <td>core_C10</td>
+            <td>(331, 330)</td>
+            <td>18.7%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C11</td>
+            <td>(320, 310)</td>
+            <td>6.9%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C12</td>
+            <td>(321, 313)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_C13</td>
+            <td>(325, 341)</td>
+            <td>4.2%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C14</td>
+            <td>(333, 319)</td>
+            <td>4.6%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C15</td>
+            <td>(328, 327)</td>
+            <td>15.3%</td>
+            <td>[0, 3, 4, 6]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C16</td>
+            <td>(338, 341)</td>
+            <td>2.0%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C2</td>
+            <td>(320, 326)</td>
+            <td>5.2%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C3</td>
+            <td>(324, 337)</td>
+            <td>4.7%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C4</td>
+            <td>(320, 306)</td>
+            <td>14.5%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C5</td>
+            <td>(323, 323)</td>
+            <td>2.5%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C6</td>
+            <td>(326, 325)</td>
+            <td>0.9%</td>
+            <td>[0, 3, 4]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_C7</td>
+            <td>(328, 323)</td>
+            <td>5.7%</td>
+            <td>[0, 1, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_C8</td>
+            <td>(322, 315)</td>
+            <td>0.8%</td>
+            <td>[0, 4]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_C9</td>
+            <td>(318, 326)</td>
+            <td>0.8%</td>
+            <td>[0, 4]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_D10</td>
+            <td>(314, 324)</td>
+            <td>3.8%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D11</td>
+            <td>(328, 324)</td>
+            <td>6.5%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D12</td>
+            <td>(311, 321)</td>
+            <td>4.7%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D13</td>
+            <td>(328, 327)</td>
+            <td>27.7%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D14</td>
+            <td>(341, 323)</td>
+            <td>27.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D15</td>
+            <td>(314, 316)</td>
+            <td>5.7%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D16</td>
+            <td>(308, 335)</td>
+            <td>3.8%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D2</td>
+            <td>(329, 347)</td>
+            <td>3.2%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D3</td>
+            <td>(318, 318)</td>
+            <td>1.6%</td>
+            <td>[0, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D4</td>
+            <td>(305, 325)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_D5</td>
+            <td>(313, 319)</td>
+            <td>1.6%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D6</td>
+            <td>(326, 316)</td>
+            <td>2.4%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D7</td>
+            <td>(325, 319)</td>
+            <td>4.8%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D8</td>
+            <td>(346, 330)</td>
+            <td>1.8%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_D9</td>
+            <td>(311, 333)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_E10</td>
+            <td>(320, 331)</td>
+            <td>9.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E11</td>
+            <td>(312, 348)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_E12</td>
+            <td>(311, 311)</td>
+            <td>10.5%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E13</td>
+            <td>(313, 330)</td>
+            <td>12.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E14</td>
+            <td>(333, 332)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_E15</td>
+            <td>(314, 324)</td>
+            <td>21.2%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E16</td>
+            <td>(333, 313)</td>
+            <td>4.0%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E2</td>
+            <td>(316, 324)</td>
+            <td>17.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E3</td>
+            <td>(321, 328)</td>
+            <td>5.1%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E4</td>
+            <td>(321, 309)</td>
+            <td>9.5%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E5</td>
+            <td>(329, 335)</td>
+            <td>11.0%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E6</td>
+            <td>(312, 336)</td>
+            <td>4.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E7</td>
+            <td>(328, 327)</td>
+            <td>13.2%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E8</td>
+            <td>(341, 318)</td>
+            <td>13.2%</td>
+            <td>[0, 3, 4, 6]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_E9</td>
+            <td>(322, 317)</td>
+            <td>6.7%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F10</td>
+            <td>(321, 331)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F11</td>
+            <td>(311, 319)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F12</td>
+            <td>(306, 321)</td>
+            <td>10.5%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F13</td>
+            <td>(321, 318)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F14</td>
+            <td>(321, 312)</td>
+            <td>7.9%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F15</td>
+            <td>(328, 323)</td>
+            <td>6.9%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F16</td>
+            <td>(320, 308)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F2</td>
+            <td>(313, 316)</td>
+            <td>4.8%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F3</td>
+            <td>(318, 316)</td>
+            <td>4.0%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F4</td>
+            <td>(310, 333)</td>
+            <td>16.3%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F5</td>
+            <td>(314, 307)</td>
+            <td>2.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F6</td>
+            <td>(318, 318)</td>
+            <td>1.0%</td>
+            <td>[0, 7]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F7</td>
+            <td>(319, 343)</td>
+            <td>0.7%</td>
+            <td>[0, 3]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_F8</td>
+            <td>(318, 315)</td>
+            <td>5.1%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_F9</td>
+            <td>(320, 322)</td>
+            <td>4.5%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_G10</td>
+            <td>(326, 333)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G11</td>
+            <td>(322, 317)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G12</td>
+            <td>(317, 325)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G13</td>
+            <td>(316, 319)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G14</td>
+            <td>(309, 324)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G15</td>
+            <td>(296, 324)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G16</td>
+            <td>(287, 325)</td>
+            <td>6.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_G2</td>
+            <td>(312, 325)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G3</td>
+            <td>(316, 333)</td>
+            <td>8.8%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_G4</td>
+            <td>(324, 334)</td>
+            <td>0.9%</td>
+            <td>[0, 3]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G5</td>
+            <td>(319, 304)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G6</td>
+            <td>(319, 317)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G7</td>
+            <td>(332, 325)</td>
+            <td>0.7%</td>
+            <td>[0, 7]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_G8</td>
+            <td>(324, 334)</td>
+            <td>1.5%</td>
+            <td>[0, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_G9</td>
+            <td>(318, 333)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H10</td>
+            <td>(330, 317)</td>
+            <td>0.5%</td>
+            <td>[0, 7]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H11</td>
+            <td>(330, 333)</td>
+            <td>4.5%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H12</td>
+            <td>(320, 335)</td>
+            <td>2.2%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H13</td>
+            <td>(336, 340)</td>
+            <td>2.2%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H14</td>
+            <td>(328, 308)</td>
+            <td>7.6%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H15</td>
+            <td>(327, 323)</td>
+            <td>11.0%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H16</td>
+            <td>(331, 339)</td>
+            <td>7.3%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_H2</td>
+            <td>(302, 325)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H3</td>
+            <td>(302, 322)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H4</td>
+            <td>(312, 339)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H5</td>
+            <td>(313, 312)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H6</td>
+            <td>(304, 313)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H7</td>
+            <td>(307, 319)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H8</td>
+            <td>(325, 332)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_H9</td>
+            <td>(335, 315)</td>
+            <td>0.4%</td>
+            <td>[0, 7]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_I10</td>
+            <td>(324, 305)</td>
+            <td>1.1%</td>
+            <td>[0, 3, 5]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I11</td>
+            <td>(331, 326)</td>
+            <td>2.2%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I12</td>
+            <td>(328, 317)</td>
+            <td>14.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I13</td>
+            <td>(315, 319)</td>
+            <td>2.5%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I14</td>
+            <td>(343, 347)</td>
+            <td>2.4%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I15</td>
+            <td>(334, 348)</td>
+            <td>2.4%</td>
+            <td>[0, 3, 4, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I16</td>
+            <td>(317, 303)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_I2</td>
+            <td>(335, 331)</td>
+            <td>6.0%</td>
+            <td>[0, 3, 4, 6, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I3</td>
+            <td>(337, 351)</td>
+            <td>15.8%</td>
+            <td>[0, 3, 4, 6, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I4</td>
+            <td>(328, 323)</td>
+            <td>7.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I5</td>
+            <td>(343, 335)</td>
+            <td>11.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I6</td>
+            <td>(331, 327)</td>
+            <td>15.1%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I7</td>
+            <td>(337, 324)</td>
+            <td>28.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I8</td>
+            <td>(310, 327)</td>
+            <td>14.1%</td>
+            <td>[0, 3]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_I9</td>
+            <td>(335, 338)</td>
+            <td>21.3%</td>
+            <td>[0, 3, 4, 6]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J10</td>
+            <td>(331, 324)</td>
+            <td>3.5%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J11</td>
+            <td>(329, 323)</td>
+            <td>7.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J12</td>
+            <td>(330, 331)</td>
+            <td>3.3%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J13</td>
+            <td>(328, 329)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_J14</td>
+            <td>(322, 338)</td>
+            <td>4.3%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J15</td>
+            <td>(326, 334)</td>
+            <td>3.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J16</td>
+            <td>(318, 336)</td>
+            <td>1.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J2</td>
+            <td>(327, 330)</td>
+            <td>8.3%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J3</td>
+            <td>(320, 331)</td>
+            <td>7.9%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J4</td>
+            <td>(321, 319)</td>
+            <td>3.6%</td>
+            <td>[0, 3, 4]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_J9</td>
+            <td>(319, 347)</td>
+            <td>1.1%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K10</td>
+            <td>(316, 308)</td>
+            <td>3.5%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K11</td>
+            <td>(320, 323)</td>
+            <td>8.8%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K12</td>
+            <td>(317, 329)</td>
+            <td>2.0%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K13</td>
+            <td>(337, 334)</td>
+            <td>2.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K14</td>
+            <td>(309, 314)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_K15</td>
+            <td>(311, 324)</td>
+            <td>1.3%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K16</td>
+            <td>(315, 327)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_K2</td>
+            <td>(331, 365)</td>
+            <td>8.3%</td>
+            <td>[0, 1, 2, 5]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K3</td>
+            <td>(313, 301)</td>
+            <td>3.4%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K4</td>
+            <td>(314, 296)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_K5</td>
+            <td>(312, 307)</td>
+            <td>4.1%</td>
+            <td>[0, 1]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K6</td>
+            <td>(321, 323)</td>
+            <td>1.3%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K7</td>
+            <td>(325, 310)</td>
+            <td>2.0%</td>
+            <td>[0, 2, 5]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_K8</td>
+            <td>(325, 313)</td>
+            <td>0.9%</td>
+            <td>[0, 1, 2]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_K9</td>
+            <td>(318, 318)</td>
+            <td>0.2%</td>
+            <td>[0, 2]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L10</td>
+            <td>(330, 319)</td>
+            <td>8.0%</td>
+            <td>[0, 2, 5, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L11</td>
+            <td>(332, 321)</td>
+            <td>5.4%</td>
+            <td>[0, 1, 2, 5]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L12</td>
+            <td>(333, 307)</td>
+            <td>4.0%</td>
+            <td>[0, 2, 5, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L13</td>
+            <td>(310, 298)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L14</td>
+            <td>(318, 335)</td>
+            <td>4.0%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L15</td>
+            <td>(309, 305)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L16</td>
+            <td>(340, 320)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L2</td>
+            <td>(317, 304)</td>
+            <td>2.6%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L3</td>
+            <td>(266, 311)</td>
+            <td>4.6%</td>
+            <td>[0, 2, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L4</td>
+            <td>(323, 301)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L5</td>
+            <td>(328, 349)</td>
+            <td>0.9%</td>
+            <td>[0, 7]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L6</td>
+            <td>(325, 335)</td>
+            <td>1.4%</td>
+            <td>[0, 2, 7]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L7</td>
+            <td>(327, 321)</td>
+            <td>1.4%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_L8</td>
+            <td>(281, 302)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_L9</td>
+            <td>(326, 325)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M10</td>
+            <td>(323, 336)</td>
+            <td>2.1%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M11</td>
+            <td>(360, 321)</td>
+            <td>2.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M12</td>
+            <td>(329, 314)</td>
+            <td>1.8%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M13</td>
+            <td>(334, 337)</td>
+            <td>2.1%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M14</td>
+            <td>(327, 310)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M15</td>
+            <td>(312, 310)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M16</td>
+            <td>(342, 312)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M2</td>
+            <td>(244, 321)</td>
+            <td>2.9%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M3</td>
+            <td>(332, 325)</td>
+            <td>2.9%</td>
+            <td>[0, 1, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M4</td>
+            <td>(326, 332)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M5</td>
+            <td>(311, 296)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M6</td>
+            <td>(317, 316)</td>
+            <td>2.5%</td>
+            <td>[0, 1, 2, 5]</td>
+            <td class="success">None</td>
+        </tr>
+        
+        <tr>
+            <td>core_M7</td>
+            <td>(334, 323)</td>
+            <td>0.0%</td>
+            <td>[0]</td>
+            <td class="warning">No annotations, Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M8</td>
+            <td>(322, 312)</td>
+            <td>0.1%</td>
+            <td>[0, 5]</td>
+            <td class="warning">Very few annotations</td>
+        </tr>
+        
+        <tr>
+            <td>core_M9</td>
+            <td>(313, 325)</td>
+            <td>8.3%</td>
+            <td>[0, 2]</td>
+            <td class="success">None</td>
+        </tr>
+        </table><h2>Individual Core Validations</h2>
+        <div class="core-section">
+            <h3>core_C10</h3>
+            <img src="core_C10_validation.png" alt="core_C10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C11</h3>
+            <img src="core_C11_validation.png" alt="core_C11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C12</h3>
+            <img src="core_C12_validation.png" alt="core_C12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C13</h3>
+            <img src="core_C13_validation.png" alt="core_C13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C14</h3>
+            <img src="core_C14_validation.png" alt="core_C14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C15</h3>
+            <img src="core_C15_validation.png" alt="core_C15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C16</h3>
+            <img src="core_C16_validation.png" alt="core_C16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C2</h3>
+            <img src="core_C2_validation.png" alt="core_C2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C3</h3>
+            <img src="core_C3_validation.png" alt="core_C3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C4</h3>
+            <img src="core_C4_validation.png" alt="core_C4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C5</h3>
+            <img src="core_C5_validation.png" alt="core_C5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C6</h3>
+            <img src="core_C6_validation.png" alt="core_C6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C7</h3>
+            <img src="core_C7_validation.png" alt="core_C7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C8</h3>
+            <img src="core_C8_validation.png" alt="core_C8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_C9</h3>
+            <img src="core_C9_validation.png" alt="core_C9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D10</h3>
+            <img src="core_D10_validation.png" alt="core_D10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D11</h3>
+            <img src="core_D11_validation.png" alt="core_D11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D12</h3>
+            <img src="core_D12_validation.png" alt="core_D12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D13</h3>
+            <img src="core_D13_validation.png" alt="core_D13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D14</h3>
+            <img src="core_D14_validation.png" alt="core_D14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D15</h3>
+            <img src="core_D15_validation.png" alt="core_D15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D16</h3>
+            <img src="core_D16_validation.png" alt="core_D16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D2</h3>
+            <img src="core_D2_validation.png" alt="core_D2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D3</h3>
+            <img src="core_D3_validation.png" alt="core_D3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D4</h3>
+            <img src="core_D4_validation.png" alt="core_D4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D5</h3>
+            <img src="core_D5_validation.png" alt="core_D5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D6</h3>
+            <img src="core_D6_validation.png" alt="core_D6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D7</h3>
+            <img src="core_D7_validation.png" alt="core_D7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D8</h3>
+            <img src="core_D8_validation.png" alt="core_D8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_D9</h3>
+            <img src="core_D9_validation.png" alt="core_D9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E10</h3>
+            <img src="core_E10_validation.png" alt="core_E10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E11</h3>
+            <img src="core_E11_validation.png" alt="core_E11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E12</h3>
+            <img src="core_E12_validation.png" alt="core_E12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E13</h3>
+            <img src="core_E13_validation.png" alt="core_E13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E14</h3>
+            <img src="core_E14_validation.png" alt="core_E14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E15</h3>
+            <img src="core_E15_validation.png" alt="core_E15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E16</h3>
+            <img src="core_E16_validation.png" alt="core_E16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E2</h3>
+            <img src="core_E2_validation.png" alt="core_E2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E3</h3>
+            <img src="core_E3_validation.png" alt="core_E3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E4</h3>
+            <img src="core_E4_validation.png" alt="core_E4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E5</h3>
+            <img src="core_E5_validation.png" alt="core_E5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E6</h3>
+            <img src="core_E6_validation.png" alt="core_E6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E7</h3>
+            <img src="core_E7_validation.png" alt="core_E7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E8</h3>
+            <img src="core_E8_validation.png" alt="core_E8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_E9</h3>
+            <img src="core_E9_validation.png" alt="core_E9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F10</h3>
+            <img src="core_F10_validation.png" alt="core_F10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F11</h3>
+            <img src="core_F11_validation.png" alt="core_F11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F12</h3>
+            <img src="core_F12_validation.png" alt="core_F12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F13</h3>
+            <img src="core_F13_validation.png" alt="core_F13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F14</h3>
+            <img src="core_F14_validation.png" alt="core_F14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F15</h3>
+            <img src="core_F15_validation.png" alt="core_F15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F16</h3>
+            <img src="core_F16_validation.png" alt="core_F16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F2</h3>
+            <img src="core_F2_validation.png" alt="core_F2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F3</h3>
+            <img src="core_F3_validation.png" alt="core_F3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F4</h3>
+            <img src="core_F4_validation.png" alt="core_F4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F5</h3>
+            <img src="core_F5_validation.png" alt="core_F5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F6</h3>
+            <img src="core_F6_validation.png" alt="core_F6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F7</h3>
+            <img src="core_F7_validation.png" alt="core_F7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F8</h3>
+            <img src="core_F8_validation.png" alt="core_F8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_F9</h3>
+            <img src="core_F9_validation.png" alt="core_F9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G10</h3>
+            <img src="core_G10_validation.png" alt="core_G10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G11</h3>
+            <img src="core_G11_validation.png" alt="core_G11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G12</h3>
+            <img src="core_G12_validation.png" alt="core_G12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G13</h3>
+            <img src="core_G13_validation.png" alt="core_G13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G14</h3>
+            <img src="core_G14_validation.png" alt="core_G14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G15</h3>
+            <img src="core_G15_validation.png" alt="core_G15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G16</h3>
+            <img src="core_G16_validation.png" alt="core_G16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G2</h3>
+            <img src="core_G2_validation.png" alt="core_G2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G3</h3>
+            <img src="core_G3_validation.png" alt="core_G3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G4</h3>
+            <img src="core_G4_validation.png" alt="core_G4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G5</h3>
+            <img src="core_G5_validation.png" alt="core_G5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G6</h3>
+            <img src="core_G6_validation.png" alt="core_G6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G7</h3>
+            <img src="core_G7_validation.png" alt="core_G7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G8</h3>
+            <img src="core_G8_validation.png" alt="core_G8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_G9</h3>
+            <img src="core_G9_validation.png" alt="core_G9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H10</h3>
+            <img src="core_H10_validation.png" alt="core_H10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H11</h3>
+            <img src="core_H11_validation.png" alt="core_H11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H12</h3>
+            <img src="core_H12_validation.png" alt="core_H12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H13</h3>
+            <img src="core_H13_validation.png" alt="core_H13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H14</h3>
+            <img src="core_H14_validation.png" alt="core_H14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H15</h3>
+            <img src="core_H15_validation.png" alt="core_H15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H16</h3>
+            <img src="core_H16_validation.png" alt="core_H16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H2</h3>
+            <img src="core_H2_validation.png" alt="core_H2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H3</h3>
+            <img src="core_H3_validation.png" alt="core_H3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H4</h3>
+            <img src="core_H4_validation.png" alt="core_H4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H5</h3>
+            <img src="core_H5_validation.png" alt="core_H5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H6</h3>
+            <img src="core_H6_validation.png" alt="core_H6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H7</h3>
+            <img src="core_H7_validation.png" alt="core_H7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H8</h3>
+            <img src="core_H8_validation.png" alt="core_H8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_H9</h3>
+            <img src="core_H9_validation.png" alt="core_H9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I10</h3>
+            <img src="core_I10_validation.png" alt="core_I10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I11</h3>
+            <img src="core_I11_validation.png" alt="core_I11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I12</h3>
+            <img src="core_I12_validation.png" alt="core_I12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I13</h3>
+            <img src="core_I13_validation.png" alt="core_I13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I14</h3>
+            <img src="core_I14_validation.png" alt="core_I14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I15</h3>
+            <img src="core_I15_validation.png" alt="core_I15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I16</h3>
+            <img src="core_I16_validation.png" alt="core_I16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I2</h3>
+            <img src="core_I2_validation.png" alt="core_I2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I3</h3>
+            <img src="core_I3_validation.png" alt="core_I3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I4</h3>
+            <img src="core_I4_validation.png" alt="core_I4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I5</h3>
+            <img src="core_I5_validation.png" alt="core_I5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I6</h3>
+            <img src="core_I6_validation.png" alt="core_I6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I7</h3>
+            <img src="core_I7_validation.png" alt="core_I7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I8</h3>
+            <img src="core_I8_validation.png" alt="core_I8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_I9</h3>
+            <img src="core_I9_validation.png" alt="core_I9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J10</h3>
+            <img src="core_J10_validation.png" alt="core_J10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J11</h3>
+            <img src="core_J11_validation.png" alt="core_J11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J12</h3>
+            <img src="core_J12_validation.png" alt="core_J12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J13</h3>
+            <img src="core_J13_validation.png" alt="core_J13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J14</h3>
+            <img src="core_J14_validation.png" alt="core_J14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J15</h3>
+            <img src="core_J15_validation.png" alt="core_J15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J16</h3>
+            <img src="core_J16_validation.png" alt="core_J16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J2</h3>
+            <img src="core_J2_validation.png" alt="core_J2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J3</h3>
+            <img src="core_J3_validation.png" alt="core_J3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J4</h3>
+            <img src="core_J4_validation.png" alt="core_J4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_J9</h3>
+            <img src="core_J9_validation.png" alt="core_J9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K10</h3>
+            <img src="core_K10_validation.png" alt="core_K10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K11</h3>
+            <img src="core_K11_validation.png" alt="core_K11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K12</h3>
+            <img src="core_K12_validation.png" alt="core_K12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K13</h3>
+            <img src="core_K13_validation.png" alt="core_K13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K14</h3>
+            <img src="core_K14_validation.png" alt="core_K14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K15</h3>
+            <img src="core_K15_validation.png" alt="core_K15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K16</h3>
+            <img src="core_K16_validation.png" alt="core_K16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K2</h3>
+            <img src="core_K2_validation.png" alt="core_K2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K3</h3>
+            <img src="core_K3_validation.png" alt="core_K3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K4</h3>
+            <img src="core_K4_validation.png" alt="core_K4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K5</h3>
+            <img src="core_K5_validation.png" alt="core_K5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K6</h3>
+            <img src="core_K6_validation.png" alt="core_K6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K7</h3>
+            <img src="core_K7_validation.png" alt="core_K7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K8</h3>
+            <img src="core_K8_validation.png" alt="core_K8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_K9</h3>
+            <img src="core_K9_validation.png" alt="core_K9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L10</h3>
+            <img src="core_L10_validation.png" alt="core_L10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L11</h3>
+            <img src="core_L11_validation.png" alt="core_L11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L12</h3>
+            <img src="core_L12_validation.png" alt="core_L12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L13</h3>
+            <img src="core_L13_validation.png" alt="core_L13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L14</h3>
+            <img src="core_L14_validation.png" alt="core_L14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L15</h3>
+            <img src="core_L15_validation.png" alt="core_L15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L16</h3>
+            <img src="core_L16_validation.png" alt="core_L16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L2</h3>
+            <img src="core_L2_validation.png" alt="core_L2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L3</h3>
+            <img src="core_L3_validation.png" alt="core_L3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L4</h3>
+            <img src="core_L4_validation.png" alt="core_L4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L5</h3>
+            <img src="core_L5_validation.png" alt="core_L5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L6</h3>
+            <img src="core_L6_validation.png" alt="core_L6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L7</h3>
+            <img src="core_L7_validation.png" alt="core_L7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L8</h3>
+            <img src="core_L8_validation.png" alt="core_L8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_L9</h3>
+            <img src="core_L9_validation.png" alt="core_L9 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M10</h3>
+            <img src="core_M10_validation.png" alt="core_M10 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M11</h3>
+            <img src="core_M11_validation.png" alt="core_M11 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M12</h3>
+            <img src="core_M12_validation.png" alt="core_M12 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M13</h3>
+            <img src="core_M13_validation.png" alt="core_M13 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M14</h3>
+            <img src="core_M14_validation.png" alt="core_M14 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M15</h3>
+            <img src="core_M15_validation.png" alt="core_M15 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M16</h3>
+            <img src="core_M16_validation.png" alt="core_M16 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M2</h3>
+            <img src="core_M2_validation.png" alt="core_M2 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M3</h3>
+            <img src="core_M3_validation.png" alt="core_M3 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M4</h3>
+            <img src="core_M4_validation.png" alt="core_M4 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M5</h3>
+            <img src="core_M5_validation.png" alt="core_M5 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M6</h3>
+            <img src="core_M6_validation.png" alt="core_M6 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M7</h3>
+            <img src="core_M7_validation.png" alt="core_M7 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M8</h3>
+            <img src="core_M8_validation.png" alt="core_M8 validation">
+        </div>
+        
+        <div class="core-section">
+            <h3>core_M9</h3>
+            <img src="core_M9_validation.png" alt="core_M9 validation">
+        </div>
+        
+    </body>
+    </html>
+    
