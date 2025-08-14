@@ -524,7 +524,7 @@ class DFIRExporter:
             [str(f) for f in val_npz],
             mode='test',
             augment=False,
-            ignore_index=-100,
+            ignore_index=0,
             z_mean=z_mean,
             z_std=z_std
         )

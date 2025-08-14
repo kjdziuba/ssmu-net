@@ -12,7 +12,7 @@ import numpy as np
 class DiceLoss(nn.Module):
     """Soft Dice loss for segmentation"""
     
-    def __init__(self, smooth: float = 1e-6, ignore_index: int = -100):
+    def __init__(self, smooth: float = 1e-6, ignore_index: int = 0):
         super().__init__()
         self.smooth = smooth
         self.ignore_index = ignore_index
@@ -68,7 +68,7 @@ class FocalCrossEntropyLoss(nn.Module):
     """Focal loss variant of cross-entropy for class imbalance"""
     
     def __init__(self, gamma: float = 2.0, alpha: Optional[torch.Tensor] = None, 
-                 ignore_index: int = -100):
+                 ignore_index: int = 0):
         super().__init__()
         self.gamma = gamma
         self.alpha = alpha
@@ -185,7 +185,7 @@ class CombinedSegmentationLoss(nn.Module):
                  dice_weight: float = 1.0,
                  focal_weight: float = 0.0,
                  class_weights: Optional[torch.Tensor] = None,
-                 ignore_index: int = -100):
+                 ignore_index: int = 0):
         super().__init__()
         
         self.ce_weight = ce_weight
@@ -274,7 +274,7 @@ class SSMUNetLoss(nn.Module):
             dice_weight=dice_weight,
             focal_weight=focal_weight,
             class_weights=class_weights,
-            ignore_index=-100
+            ignore_index=loss_cfg.get('seg', {}).get('ignore_index', cfg.get('data', {}).get('ignore_index', 0))
         )
         
         # Sparsity losses
@@ -297,7 +297,8 @@ class SSMUNetLoss(nn.Module):
     
     def set_class_weights(self, weights: torch.Tensor):
         """Update class weights for weighted CE loss"""
-        self.seg_loss.ce_loss = nn.CrossEntropyLoss(weight=weights, ignore_index=-100)
+        ignore_idx = self.seg_loss.ce_loss.ignore_index if hasattr(self.seg_loss.ce_loss, 'ignore_index') else -100
+        self.seg_loss.ce_loss = nn.CrossEntropyLoss(weight=weights, ignore_index=ignore_idx)
         if self.seg_loss.focal_loss is not None:
             self.seg_loss.focal_loss.alpha = weights
     

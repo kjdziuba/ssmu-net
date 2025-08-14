@@ -641,7 +641,7 @@ def run_full_audit(cfg: Dict, checkpoint_path: str, test_npz_paths: List[str]) -
         test_npz_paths,
         mode='test',
         augment=False,
-        ignore_index=-100,
+        ignore_index=0,
         z_mean=z_mean,
         z_std=z_std
     )

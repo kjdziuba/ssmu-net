@@ -1,0 +1,89 @@
+# Fixed configuration based on successful pixel_pixel experiments
+# Key changes: ignore_index=0 (not -100), proper patch size, moderate model capacity
+
+project_root: "."
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/models_fixed"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+data:
+  seed: 1337
+  folds: 3
+  batch_size: 4  # Proven to work well
+  num_workers: 4
+  center_crop: 256  # Center crop to remove black borders
+  patch_size: 64    # CRITICAL: Must be < center_crop for multiple patches
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+  ignore_index: 0   # CRITICAL FIX: Ignore background (class 0), not -100!
+
+model:
+  sinc:
+    filters: 12      # Moderate number - balance between 3 and 24
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba"
+    layers: 2
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  embed: 24          # Moderate embedding dimension
+  unet:
+    base: 24         # Match embedding dimension
+  classes: 8
+  pooling: "attention"
+  chunk_size: 256    # Smaller chunks for stability
+
+loss:
+  seg:
+    dice: true
+    ce: true
+    class_weights: "inverse_freq"
+    ignore_index: 0  # CRITICAL: Match data.ignore_index
+  sparsity:
+    alpha: 1.0e-4
+    beta: 1.0e-4
+    ramp_epochs: 10
+
+optim:
+  lr: 1.0e-4         # Conservative learning rate
+  weight_decay: 1.0e-2
+  epochs: 30
+  scheduler: "cosine"
+  amp: true
+  grad_clip: 1.0
+  grad_accumulation: 1
+  deterministic: false
+
+audits:
+  occlusion:
+    width_cm1: 15
+    stride_cm1: 5
+  jitter:
+    sigma_cm1: 3.0
+  holdout: ["slide_id", "block_id", "session_id"]
+
+dfir_export:
+  target_K: [4, 6, 8, 12]
+  min_sep_cm1: 8.0
+  selection: "greedy_nonoverlap"
+  retrain_epochs: 30
+
+reporting:
+  figures: ["arch", "bands", "qualitative", "ablation", "band_vs_miou", "throughput"]
+  throughput:
+    overhead_ms: 150.0
+    per_band_ms: 12.0
+
+# Key differences from original config:
+# 1. ignore_index: 0 (not -100) - ignore background pixels in training
+# 2. patch_size: 64 (not 256) - must be smaller than center_crop
+# 3. filters: 12 (not 3 or 24) - balanced capacity
+# 4. lr: 1.0e-4 (not 3.0e-4) - more conservative
+# 5. batch_size: 4 - proven to work well

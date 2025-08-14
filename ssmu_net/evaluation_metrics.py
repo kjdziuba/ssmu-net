@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix
 
 
 def compute_metrics(preds: torch.Tensor, targets: torch.Tensor, 
-                   num_classes: int = 8, ignore_index: int = -100,
+                   num_classes: int = 8, ignore_index: int = 0,
                    exclude_background: bool = True) -> Dict[str, float]:
     """
     Compute segmentation metrics

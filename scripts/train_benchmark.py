@@ -1,0 +1,354 @@
+#!/usr/bin/env python3
+"""
+Simple training script for benchmark models.
+Uses proven settings from successful pixel_pixel experiments.
+"""
+
+import os
+import sys
+import argparse
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from tqdm import tqdm
+import json
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from ssmu_net.data import NpzCoreDataset
+from ssmu_net.bench_models import get_benchmark_model
+from ssmu_net.losses import DiceLoss
+
+
+def compute_class_weights(train_dataset, num_classes=8):
+    """Compute class weights from training data (ignoring background)"""
+    print("Computing class weights...")
+    class_counts = torch.zeros(num_classes)
+    
+    # Sample a subset of data to compute weights
+    for i in range(min(100, len(train_dataset))):
+        _, y = train_dataset[i]
+        for c in range(num_classes):
+            class_counts[c] += (y == c).sum()
+    
+    # Compute inverse frequency weights (ignore class 0 - background)
+    total = class_counts[1:].sum()  # Exclude background
+    weights = torch.ones(num_classes)
+    weights[0] = 0  # Background weight = 0 (will be ignored)
+    
+    for c in range(1, num_classes):
+        if class_counts[c] > 0:
+            weights[c] = total / (num_classes - 1) / class_counts[c]
+    
+    # Normalize weights
+    weights[1:] = weights[1:] / weights[1:].mean()
+    
+    print("Class weights:", weights.tolist())
+    return weights
+
+
+def train_epoch(model, loader, criterion_ce, criterion_dice, optimizer, device, ignore_index=0):
+    """Train for one epoch"""
+    model.train()
+    total_loss = 0
+    total_ce = 0
+    total_dice = 0
+    
+    pbar = tqdm(loader, desc="Training")
+    for X, y in pbar:
+        X = X.to(device)
+        y = y.to(device)
+        
+        optimizer.zero_grad()
+        
+        # Forward pass
+        logits = model(X)
+        
+        # Combined loss (like successful pixel_pixel)
+        ce_loss = criterion_ce(logits, y)
+        dice_loss = criterion_dice(logits, y)
+        loss = 0.5 * ce_loss + 0.5 * dice_loss
+        
+        # Backward pass
+        loss.backward()
+        optimizer.step()
+        
+        # Track losses
+        total_loss += loss.item()
+        total_ce += ce_loss.item()
+        total_dice += dice_loss.item()
+        
+        pbar.set_postfix({
+            'loss': loss.item(),
+            'ce': ce_loss.item(),
+            'dice': dice_loss.item()
+        })
+    
+    n = len(loader)
+    return total_loss / n, total_ce / n, total_dice / n
+
+
+def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8, ignore_index=0):
+    """Validate model and compute metrics"""
+    model.eval()
+    total_loss = 0
+    total_ce = 0
+    total_dice = 0
+    
+    # For mIoU calculation
+    confusion_matrix = torch.zeros(num_classes, num_classes)
+    
+    with torch.no_grad():
+        pbar = tqdm(loader, desc="Validation")
+        for X, y in pbar:
+            X = X.to(device)
+            y = y.to(device)
+            
+            # Forward pass
+            logits = model(X)
+            
+            # Losses
+            ce_loss = criterion_ce(logits, y)
+            dice_loss = criterion_dice(logits, y)
+            loss = 0.5 * ce_loss + 0.5 * dice_loss
+            
+            total_loss += loss.item()
+            total_ce += ce_loss.item()
+            total_dice += dice_loss.item()
+            
+            # Predictions for metrics
+            preds = logits.argmax(dim=1)
+            
+            # Update confusion matrix (only for non-background pixels)
+            valid_mask = y != ignore_index
+            for c_true in range(num_classes):
+                for c_pred in range(num_classes):
+                    if c_true == ignore_index or c_pred == ignore_index:
+                        continue
+                    confusion_matrix[c_true, c_pred] += ((y == c_true) & (preds == c_pred) & valid_mask).sum()
+    
+    n = len(loader)
+    avg_loss = total_loss / n
+    avg_ce = total_ce / n
+    avg_dice = total_dice / n
+    
+    # Compute mIoU (excluding background)
+    iou_per_class = []
+    for c in range(1, num_classes):  # Skip background (class 0)
+        intersection = confusion_matrix[c, c]
+        union = confusion_matrix[c, :].sum() + confusion_matrix[:, c].sum() - intersection
+        if union > 0:
+            iou = intersection / union
+            iou_per_class.append(iou.item())
+    
+    miou = np.mean(iou_per_class) if iou_per_class else 0.0
+    
+    return avg_loss, avg_ce, avg_dice, miou
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=str, default='spectral_attention',
+                       choices=['spectral_attention', 'se_unet', 'simple'],
+                       help='Model architecture to use')
+    parser.add_argument('--epochs', type=int, default=30,
+                       help='Number of training epochs')
+    parser.add_argument('--batch_size', type=int, default=4,
+                       help='Batch size')
+    parser.add_argument('--lr', type=float, default=1e-4,
+                       help='Learning rate')
+    parser.add_argument('--patch_size', type=int, default=64,
+                       help='Patch size for training')
+    parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
+                       help='Device to use')
+    args = parser.parse_args()
+    
+    print(f"\n{'='*60}")
+    print(f"Training Benchmark Model: {args.model}")
+    print(f"{'='*60}")
+    print(f"Epochs: {args.epochs}")
+    print(f"Batch size: {args.batch_size}")
+    print(f"Learning rate: {args.lr}")
+    print(f"Patch size: {args.patch_size}")
+    print(f"Device: {args.device}")
+    print(f"{'='*60}\n")
+    
+    # Create output directory
+    output_dir = Path(f"outputs/benchmark/{args.model}")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Load datasets
+    npz_dir = "outputs/npz"
+    
+    # Create config for dataset
+    data_cfg = {
+        'patch_size': args.patch_size,
+        'spectral_range': [900, 1800],
+        'wax_gap': [1350, 1490]
+    }
+    
+    print("Loading datasets...")
+    train_dataset = NpzCoreDataset(
+        npz_dir=npz_dir,
+        cfg=data_cfg,
+        mode='train',
+        augment=True,
+        ignore_index=0,  # CRITICAL: Ignore background!
+        max_patches_per_core=50
+    )
+    
+    val_dataset = NpzCoreDataset(
+        npz_dir=npz_dir,
+        cfg=data_cfg,
+        mode='val',
+        augment=False,
+        ignore_index=0,  # CRITICAL: Ignore background!
+        max_patches_per_core=10
+    )
+    
+    print(f"Train samples: {len(train_dataset)}")
+    print(f"Val samples: {len(val_dataset)}")
+    
+    # Create data loaders
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=args.batch_size,
+        shuffle=True,
+        num_workers=2,
+        pin_memory=True
+    )
+    
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=2,
+        pin_memory=True
+    )
+    
+    # Get number of channels from data
+    sample_x, _ = train_dataset[0]
+    in_channels = sample_x.shape[0]
+    print(f"Input channels: {in_channels}")
+    
+    # Create model
+    model = get_benchmark_model(
+        model_name=args.model,
+        in_channels=in_channels,
+        num_classes=8
+    )
+    model = model.to(args.device)
+    
+    # Count parameters
+    total_params = sum(p.numel() for p in model.parameters())
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"Total parameters: {total_params:,}")
+    print(f"Trainable parameters: {trainable_params:,}")
+    
+    # Compute class weights
+    class_weights = compute_class_weights(train_dataset)
+    class_weights = class_weights.to(args.device)
+    
+    # Loss functions (matching successful pixel_pixel)
+    criterion_ce = nn.CrossEntropyLoss(weight=class_weights, ignore_index=0)
+    criterion_dice = DiceLoss(ignore_index=0)
+    
+    # Optimizer
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-2)
+    
+    # Learning rate scheduler
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
+    
+    # Training history
+    history = {
+        'train_loss': [],
+        'train_ce': [],
+        'train_dice': [],
+        'val_loss': [],
+        'val_ce': [],
+        'val_dice': [],
+        'val_miou': [],
+        'best_miou': 0,
+        'best_epoch': 0
+    }
+    
+    # Training loop
+    best_miou = 0
+    best_epoch = 0
+    
+    for epoch in range(args.epochs):
+        print(f"\nEpoch {epoch + 1}/{args.epochs}")
+        print("-" * 40)
+        
+        # Train
+        train_loss, train_ce, train_dice = train_epoch(
+            model, train_loader, criterion_ce, criterion_dice, 
+            optimizer, args.device, ignore_index=0
+        )
+        
+        # Validate
+        val_loss, val_ce, val_dice, val_miou = validate(
+            model, val_loader, criterion_ce, criterion_dice,
+            args.device, num_classes=8, ignore_index=0
+        )
+        
+        # Update scheduler
+        scheduler.step()
+        
+        # Save history
+        history['train_loss'].append(train_loss)
+        history['train_ce'].append(train_ce)
+        history['train_dice'].append(train_dice)
+        history['val_loss'].append(val_loss)
+        history['val_ce'].append(val_ce)
+        history['val_dice'].append(val_dice)
+        history['val_miou'].append(val_miou)
+        
+        # Print metrics
+        print(f"Train - Loss: {train_loss:.4f}, CE: {train_ce:.4f}, Dice: {train_dice:.4f}")
+        print(f"Val   - Loss: {val_loss:.4f}, CE: {val_ce:.4f}, Dice: {val_dice:.4f}, mIoU: {val_miou:.4f}")
+        print(f"LR: {scheduler.get_last_lr()[0]:.6f}")
+        
+        # Save best model
+        if val_miou > best_miou:
+            best_miou = val_miou
+            best_epoch = epoch + 1
+            history['best_miou'] = best_miou
+            history['best_epoch'] = best_epoch
+            
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'best_miou': best_miou,
+                'args': vars(args)
+            }, output_dir / 'best_model.pth')
+            
+            print(f"✅ New best model! mIoU: {best_miou:.4f}")
+    
+    # Save final model
+    torch.save({
+        'epoch': args.epochs,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'history': history,
+        'args': vars(args)
+    }, output_dir / 'final_model.pth')
+    
+    # Save history
+    with open(output_dir / 'history.json', 'w') as f:
+        json.dump(history, f, indent=2)
+    
+    print(f"\n{'='*60}")
+    print(f"Training Complete!")
+    print(f"Best mIoU: {best_miou:.4f} at epoch {best_epoch}")
+    print(f"Results saved to: {output_dir}")
+    print(f"{'='*60}\n")
+
+
+if __name__ == "__main__":
+    main()

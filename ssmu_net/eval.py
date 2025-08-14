@@ -392,7 +392,7 @@ def evaluate_fold(cfg: Dict, fold: int, test_paths: List[str]) -> Dict[str, floa
         test_paths,
         mode='test',
         augment=False,
-        ignore_index=-100,
+        ignore_index=0,
         z_mean=z_mean,
         z_std=z_std
     )
