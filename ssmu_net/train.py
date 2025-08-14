@@ -207,6 +207,7 @@ class Trainer:
         all_preds = []
         all_targets = []
         total_loss = 0.0
+        valid_samples = 0  # Track cores with valid losses
         
         pbar = tqdm(dataloader, desc=f'Val Epoch {epoch+1}/{self.epochs}')
         
@@ -214,6 +215,10 @@ class Trainer:
             # Move to device
             X = batch['X'].to(self.device)
             y = batch['y'].to(self.device)
+            
+            # Skip cores with only background pixels (prevents NaN)
+            if (y != 0).sum() == 0:  # Assuming 0 is background/ignore_index
+                continue
             
             # Forward pass
             if self.amp_enabled:
@@ -224,7 +229,12 @@ class Trainer:
                 logits, cutoffs = self.model(X)
                 losses = self.loss_fn(logits, y, cutoffs)
             
+            # Skip if loss is NaN (safety check)
+            if torch.isnan(losses['total']):
+                continue
+            
             total_loss += losses['total'].item()
+            valid_samples += 1
             
             # Get predictions
             preds = torch.argmax(logits, dim=1)
@@ -234,11 +244,19 @@ class Trainer:
             all_targets.append(y.cpu().flatten())
         
         # Compute metrics
-        all_preds = torch.cat(all_preds, dim=0)
-        all_targets = torch.cat(all_targets, dim=0)
-        
-        metrics = compute_metrics(all_preds, all_targets, num_classes=self.cfg['model']['classes'])
-        metrics['loss'] = total_loss / len(dataloader)
+        if valid_samples > 0:
+            all_preds = torch.cat(all_preds, dim=0)
+            all_targets = torch.cat(all_targets, dim=0)
+            
+            metrics = compute_metrics(all_preds, all_targets, num_classes=self.cfg['model']['classes'])
+            metrics['loss'] = total_loss / valid_samples
+        else:
+            # No valid samples - return NaN metrics
+            metrics = {
+                'loss': float('nan'),
+                'miou': 0.0,
+                'dice': 0.0
+            }
         
         return metrics
     

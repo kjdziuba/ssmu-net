@@ -19,8 +19,8 @@ data:
   spectral_range: [900, 1800]
   wax_gap: [1350, 1490]
   ignore_index: 0  # CRITICAL: Ignore background pixels
-  min_foreground_ratio: 0.1  # Avoid all-background patches that cause NaN
-  min_tissue_ratio: 0.2
+  min_foreground_ratio: 0.01  # Avoid all-background patches that cause NaN
+  min_tissue_ratio: 0.02
 
 # Model selection for benchmark
 benchmark:

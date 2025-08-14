@@ -102,7 +102,7 @@ def train_epoch(model, loader, criterion_ce, criterion_dice, optimizer, device, 
 
 
 def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8, ignore_index=0):
-    """Validate model and compute metrics"""
+    """Validate model and compute metrics on full cores"""
     model.eval()
     total_loss = 0
     total_ce = 0
@@ -110,6 +110,7 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
     
     # For mIoU calculation
     confusion_matrix = torch.zeros(num_classes, num_classes)
+    valid_samples = 0  # Count samples with valid losses
     
     with torch.no_grad():
         pbar = tqdm(loader, desc="Validation")
@@ -122,17 +123,40 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
                 X = X.to(device)
                 y = y.to(device)
             
-            # Forward pass
-            logits = model(X)
+            # Handle variable sizes by padding to multiple of 32
+            B, C, H, W = X.shape
+            # Calculate padded dimensions (multiple of 32 for U-Net)
+            pad_h = (32 - H % 32) % 32
+            pad_w = (32 - W % 32) % 32
+            
+            if pad_h > 0 or pad_w > 0:
+                # Pad input
+                X_padded = F.pad(X, (0, pad_w, 0, pad_h), mode='constant', value=0)
+                # Forward pass on padded input
+                logits = model(X_padded)
+                # Crop predictions back to original size
+                logits = logits[:, :, :H, :W]
+            else:
+                # No padding needed
+                logits = model(X)
+            
+            # Skip if this core has no valid pixels (all background)
+            if (y != ignore_index).sum() == 0:
+                continue
             
             # Losses
             ce_loss = criterion_ce(logits, y)
             dice_loss = criterion_dice(logits, y)
             loss = 0.5 * ce_loss + 0.5 * dice_loss
             
+            # Skip if loss is NaN
+            if torch.isnan(loss):
+                continue
+            
             total_loss += loss.item()
             total_ce += ce_loss.item()
             total_dice += dice_loss.item()
+            valid_samples += 1
             
             # Predictions for metrics
             preds = logits.argmax(dim=1)
@@ -145,10 +169,14 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
                         continue
                     confusion_matrix[c_true, c_pred] += ((y == c_true) & (preds == c_pred) & valid_mask).sum()
     
-    n = len(loader)
-    avg_loss = total_loss / n
-    avg_ce = total_ce / n
-    avg_dice = total_dice / n
+    # Use valid_samples for averaging (cores with annotations)
+    if valid_samples > 0:
+        avg_loss = total_loss / valid_samples
+        avg_ce = total_ce / valid_samples
+        avg_dice = total_dice / valid_samples
+    else:
+        # No valid samples
+        avg_loss = avg_ce = avg_dice = float('nan')
     
     # Compute mIoU (excluding background)
     iou_per_class = []
@@ -251,7 +279,7 @@ def main():
     val_dataset = NpzCoreDataset(
         npz_paths=val_files,
         patch_size=cfg['data']['patch_size'],
-        mode='val',
+        mode='val',  # Keep val mode for full cores
         augment=False,
         ignore_index=cfg['data']['ignore_index'],
         max_patches_per_core=cfg.get('sampling', {}).get('max_patches_per_core_val', 10)
@@ -271,7 +299,7 @@ def main():
     
     val_loader = DataLoader(
         val_dataset,
-        batch_size=args.batch_size,
+        batch_size=1,  # MUST be 1 for full cores with variable sizes
         shuffle=False,
         num_workers=2,
         pin_memory=True
