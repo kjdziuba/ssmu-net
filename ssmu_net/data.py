@@ -24,10 +24,6 @@ def resolve_npz_path(path) -> str:
         # Strip the old absolute path and use current working directory
         relative_path = path_str.replace('/mnt/e/breast_experiments/ssmu_net_project/', '')
         return relative_path
-    elif path_str.startswith('/Volumes/LaCie/breast_experiments/ssmu_net_project/'):
-        # Handle Mac paths for RunPod
-        relative_path = path_str.replace('/Volumes/LaCie/breast_experiments/ssmu_net_project/', '')
-        return relative_path
     return path_str
 
 
@@ -338,13 +334,14 @@ class NpzCoreDataset(Dataset):
                 tissue_mask = npz['tissue_mask'][i:i+self.patch_size, j:j+self.patch_size].astype(np.uint8)
                 npz.close()
             
-            # Apply augmentations
+            # CRITICAL FIX: Set non-tissue pixels to ignore_index BEFORE augmentation
+            # This ensures the ignore labels move correctly with the augmented data
+            y[tissue_mask == 0] = self.ignore_index
+            
+            # Apply augmentations (ignore labels now move with the image)
             if self.augment:
                 X, y = self._augment(X, y)
-                # Note: tissue_mask augmentation skipped as it's not used in training
-            
-            # Set non-tissue pixels to ignore_index
-            y[tissue_mask == 0] = self.ignore_index
+                # tissue_mask no longer needed after marking ignore pixels
             
             # Safety check: ensure patch has some non-ignored pixels
             # This prevents NaN losses when all pixels are background
@@ -544,7 +541,7 @@ def create_dataloaders(cfg: Dict[str, Any],
                       train_paths: List[str],
                       val_paths: List[str],
                       test_paths: Optional[List[str]] = None,
-                      use_zscore: bool = False) -> Dict[str, DataLoader]:
+                      use_zscore: bool = True) -> Dict[str, DataLoader]:
     """Create dataloaders for training, validation, and optionally test
     
     Args:
@@ -563,17 +560,14 @@ def create_dataloaders(cfg: Dict[str, Any],
         print("Skipping z-score normalization (using raw double-L2 features)")
         z_mean, z_std = None, None
     
-    # Save z-score stats (if computed)
-    if use_zscore:
-        stats_path = Path(cfg['runtime_paths']['tables']) / 'zscore_stats.csv'
-        pd.DataFrame({
-            'wn_idx': np.arange(z_mean.size),
-            'mean': z_mean,
-            'std': z_std
-        }).to_csv(stats_path, index=False)
-        print(f"Saved z-score stats to {stats_path}")
-    else:
-        print("No z-score stats to save (using raw features)")
+    # Save z-score stats
+    stats_path = Path(cfg['runtime_paths']['tables']) / 'zscore_stats.csv'
+    pd.DataFrame({
+        'wn_idx': np.arange(z_mean.size),
+        'mean': z_mean,
+        'std': z_std
+    }).to_csv(stats_path, index=False)
+    print(f"Saved z-score stats to {stats_path}")
     
     # Create datasets with z-score normalization
     train_dataset = NpzCoreDataset(
