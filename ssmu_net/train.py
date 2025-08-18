@@ -313,8 +313,10 @@ class Trainer:
         # Set wavenumber array on model (get from first batch)
         first_batch = next(iter(train_loader))
         if hasattr(self.model, 'set_wavenumbers'):
-            self.model.set_wavenumbers(first_batch['wn'])
-            print(f"Set wavenumber array: {len(first_batch['wn'])} channels")
+            # Get wavenumber from first sample (all samples have identical wn)
+            wn = first_batch['wn'][0]  # Shape: (C,) not (B, C)
+            self.model.set_wavenumbers(wn)
+            print(f"Set wavenumber array: {len(wn)} channels (range: {wn.min():.1f}-{wn.max():.1f} cm⁻¹)")
         
         for epoch in range(self.epochs):
             start_time = time.time()
