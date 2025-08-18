@@ -133,6 +133,7 @@ class Trainer:
             # Move to device
             X = batch['X'].to(self.device)
             y = batch['y'].to(self.device)
+            # Note: wn is already set on model during setup
             
             # Zero gradients
             self.optimizer.zero_grad()
@@ -215,6 +216,7 @@ class Trainer:
             # Move to device
             X = batch['X'].to(self.device)
             y = batch['y'].to(self.device)
+            # Note: wn is already set on model during setup
             
             # Skip cores with only background pixels (prevents NaN)
             if (y != 0).sum() == 0:  # Assuming 0 is background/ignore_index
@@ -415,8 +417,8 @@ class Trainer:
 def train_fold(cfg: Dict, fold: int, train_paths: List[str], val_paths: List[str]):
     """Train a single fold"""
     
-    # Create dataloaders
-    loaders = create_dataloaders(cfg, train_paths, val_paths)
+    # Create dataloaders (disable z-score for SSMU-Net, use raw double-L2)
+    loaders = create_dataloaders(cfg, train_paths, val_paths, use_zscore=False)
     
     # Compute class weights with optional clipping
     clip_range = None

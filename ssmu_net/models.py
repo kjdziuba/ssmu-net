@@ -18,6 +18,9 @@ class SincConv1d(nn.Module):
     """
     Learnable band-pass filters over the spectral axis.
     Cutoffs are parameterized in cm^-1 and mapped to digital frequency.
+    
+    WARNING: This class assumes uniform spectral spacing. For spectra with
+    gaps (e.g., removed wax bands), use DualSincConv1d instead.
     """
     
     def __init__(self, 
@@ -165,6 +168,107 @@ class SincConv1d(nn.Module):
         return y, (flo, fhi)
 
 
+class DualSincConv1d(nn.Module):
+    """
+    Dual-branch SincConv1d for handling spectral gaps.
+    Processes [900-1350] and [1490-1800] cm^-1 segments separately,
+    then concatenates features.
+    """
+    
+    def __init__(self,
+                 out_channels: int = 32,
+                 kernel_size: int = 129,
+                 gap_range: Tuple[float, float] = (1350.0, 1490.0),
+                 full_range: Tuple[float, float] = (900.0, 1800.0),
+                 init_bw: float = 80.0):
+        """
+        Args:
+            out_channels: Total number of filters (split between branches)
+            kernel_size: Size of sinc kernels (must be odd)
+            gap_range: (low, high) wavenumbers of the removed gap
+            full_range: (min, max) wavenumbers of the full spectrum
+            init_bw: Initial bandwidth in cm^-1
+        """
+        super().__init__()
+        
+        self.gap_low, self.gap_high = gap_range
+        self.wn_min, self.wn_max = full_range
+        
+        # Define segment ranges
+        self.left_range = (self.wn_min, self.gap_low)  # [900, 1350]
+        self.right_range = (self.gap_high, self.wn_max)  # [1490, 1800]
+        
+        # Split filters between segments (can be uneven)
+        left_filters = out_channels // 2
+        right_filters = out_channels - left_filters
+        
+        # Create separate SincConv1d for each segment
+        self.sinc_left = SincConv1d(
+            out_channels=left_filters,
+            kernel_size=kernel_size,
+            wn_min=self.left_range[0],
+            wn_max=self.left_range[1],
+            init_bw=init_bw
+        )
+        
+        self.sinc_right = SincConv1d(
+            out_channels=right_filters,
+            kernel_size=kernel_size,
+            wn_min=self.right_range[0], 
+            wn_max=self.right_range[1],
+            init_bw=init_bw
+        )
+        
+        self.out_channels = out_channels
+    
+    def _find_segment_indices(self, wn: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Find indices for left and right spectral segments.
+        
+        Args:
+            wn: Wavenumber array (assumes post-gap-removal)
+            
+        Returns:
+            (left_indices, right_indices) as boolean tensors
+        """
+        left_mask = (wn <= self.gap_low)
+        right_mask = (wn >= self.gap_high)
+        return left_mask, right_mask
+    
+    def forward(self, x: torch.Tensor, wn: torch.Tensor) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
+        """
+        Args:
+            x: Input tensor of shape (B, 1, C) where C is spectral length
+            wn: Wavenumber array of shape (C,) - required for gap detection
+        
+        Returns:
+            Tuple of:
+                - Concatenated filtered output of shape (B, F, C_total)
+                - Tuple of (f_low_cm1, f_high_cm1) cutoff frequencies
+        """
+        B, _, C = x.shape
+        
+        # Find segment boundaries
+        left_mask, right_mask = self._find_segment_indices(wn)
+        
+        # Split input into segments
+        x_left = x[..., left_mask]   # (B, 1, C_left)
+        x_right = x[..., right_mask]  # (B, 1, C_right)
+        
+        # Process each segment separately
+        y_left, (flo_left, fhi_left) = self.sinc_left(x_left)
+        y_right, (flo_right, fhi_right) = self.sinc_right(x_right)
+        
+        # Concatenate outputs along channel dimension
+        y = torch.cat([y_left, y_right], dim=-1)  # (B, F_total, C_left + C_right)
+        
+        # Concatenate cutoff frequencies
+        flo_all = torch.cat([flo_left, flo_right])
+        fhi_all = torch.cat([fhi_left, fhi_right])
+        
+        return y, (flo_all, fhi_all)
+
+
 class SpectralMambaBlock(nn.Module):
     """Mamba SSM for spectral sequence modeling"""
     
@@ -280,13 +384,16 @@ class SSMUNet(nn.Module):
         embed_dim = cfg['model']['embed']
         self.chunk_size = cfg['model'].get('chunk_size', 2048)  # For memory efficiency
 
-        # 1. Sinc spectral front-end
-        self.sinc = SincConv1d(
+        # 1. Dual-branch Sinc spectral front-end (handles wax gap)
+        self.sinc = DualSincConv1d(
             out_channels=sinc_cfg['filters'],
             kernel_size=sinc_cfg['kernel_size'],
-            wn_min=sinc_cfg['wn_min'],
-            wn_max=sinc_cfg['wn_max']
+            gap_range=(1350.0, 1490.0),  # Wax gap
+            full_range=(sinc_cfg['wn_min'], sinc_cfg['wn_max'])
         )
+        
+        # Store wavenumber array (will be set during first forward pass)
+        self.register_buffer('wn', None)
         
         # 2. Mamba SSM for spectral modeling
         self.ssm = SpectralMambaBlock(
@@ -371,8 +478,10 @@ class SSMUNet(nn.Module):
         for s in range(0, x_flat.size(0), chunk_size):
             xf = x_flat[s:s+chunk_size]
             
-            # Sinc filtering
-            z, (flo, fhi) = self.sinc(xf)  # (N, F, C)
+            # Dual-branch Sinc filtering (requires wavenumber array)
+            if self.wn is None:
+                raise RuntimeError("Wavenumber array not set. Call model.set_wavenumbers(wn) first.")
+            z, (flo, fhi) = self.sinc(xf, self.wn)  # (N, F, C)
             
             # Mamba SSM
             z = z.permute(0, 2, 1)  # (N, C, F)
@@ -449,10 +558,22 @@ class SSMUNet(nn.Module):
         # Return with gradients enabled for sparsity/overlap losses
         return logits, (flo, fhi)
     
+    def set_wavenumbers(self, wn: torch.Tensor) -> None:
+        """Set wavenumber array for DualSincConv1d processing
+        
+        Args:
+            wn: Wavenumber array of shape (C,) in cm^-1
+        """
+        self.register_buffer('wn', wn.clone().detach())
+    
     def get_cutoffs_cm1(self) -> Tuple[torch.Tensor, torch.Tensor]:
         """Get learned Sinc filter cutoffs in cm^-1 for analysis (detached)"""
         with torch.no_grad():
-            flo, fhi = self.sinc._clamp_cutoffs()
+            # Get cutoffs from both branches
+            flo_left, fhi_left = self.sinc.sinc_left._clamp_cutoffs()
+            flo_right, fhi_right = self.sinc.sinc_right._clamp_cutoffs()
+            flo = torch.cat([flo_left, flo_right])
+            fhi = torch.cat([fhi_left, fhi_right])
         return flo.detach().cpu(), fhi.detach().cpu()
 
 

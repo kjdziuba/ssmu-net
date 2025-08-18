@@ -539,21 +539,37 @@ def compute_class_weights(dataset: NpzCoreDataset,
 def create_dataloaders(cfg: Dict[str, Any],
                       train_paths: List[str],
                       val_paths: List[str],
-                      test_paths: Optional[List[str]] = None) -> Dict[str, DataLoader]:
-    """Create dataloaders for training, validation, and optionally test"""
+                      test_paths: Optional[List[str]] = None,
+                      use_zscore: bool = True) -> Dict[str, DataLoader]:
+    """Create dataloaders for training, validation, and optionally test
     
-    # Compute z-score statistics from training set only
-    print("Computing z-score statistics from training set...")
-    z_mean, z_std = compute_zscore_stats(train_paths)
+    Args:
+        cfg: Configuration dictionary
+        train_paths: Training NPZ file paths
+        val_paths: Validation NPZ file paths
+        test_paths: Optional test NPZ file paths
+        use_zscore: If False, skip z-score normalization (use raw double-L2 features)
+    """
     
-    # Save z-score stats
-    stats_path = Path(cfg['runtime_paths']['tables']) / 'zscore_stats.csv'
-    pd.DataFrame({
-        'wn_idx': np.arange(z_mean.size),
-        'mean': z_mean,
-        'std': z_std
-    }).to_csv(stats_path, index=False)
-    print(f"Saved z-score stats to {stats_path}")
+    # Compute z-score statistics from training set only (if enabled)
+    if use_zscore:
+        print("Computing z-score statistics from training set...")
+        z_mean, z_std = compute_zscore_stats(train_paths)
+    else:
+        print("Skipping z-score normalization (using raw double-L2 features)")
+        z_mean, z_std = None, None
+    
+    # Save z-score stats (if computed)
+    if use_zscore:
+        stats_path = Path(cfg['runtime_paths']['tables']) / 'zscore_stats.csv'
+        pd.DataFrame({
+            'wn_idx': np.arange(z_mean.size),
+            'mean': z_mean,
+            'std': z_std
+        }).to_csv(stats_path, index=False)
+        print(f"Saved z-score stats to {stats_path}")
+    else:
+        print("No z-score stats to save (using raw features)")
     
     # Create datasets with z-score normalization
     train_dataset = NpzCoreDataset(

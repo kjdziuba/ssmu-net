@@ -19,14 +19,14 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ssmu_net.data import NpzCoreDataset
+from ssmu_net.data import NpzCoreDataset, compute_class_weights as compute_robust_weights
 from ssmu_net.bench_models import get_benchmark_model
 from ssmu_net.losses import DiceLoss
 
 
-def compute_class_weights(train_dataset, num_classes=8):
-    """Compute class weights from training data (ignoring background)"""
-    print("Computing class weights...")
+def compute_class_weights_legacy(train_dataset, num_classes=8):
+    """Legacy class weight computation (noisy, samples only 100 patches)"""
+    print("[DEPRECATED] Computing class weights from 100 samples...")
     class_counts = torch.zeros(num_classes)
     
     # Sample a subset of data to compute weights
@@ -161,14 +161,16 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
             # Predictions for metrics
             preds = logits.argmax(dim=1)
             
-            # Update confusion matrix (only for non-background pixels)
+            # Update confusion matrix using vectorized bincount (includes background predictions)
             valid_mask = y != ignore_index
-            for c_true in range(num_classes):
-                for c_pred in range(num_classes):
-                    if c_true == ignore_index or c_pred == ignore_index:
-                        continue
-                    # Ensure all tensors are on CPU for confusion matrix update
-                    confusion_matrix[c_true, c_pred] += ((y == c_true) & (preds == c_pred) & valid_mask).sum().cpu().item()
+            if valid_mask.sum() > 0:
+                t = y[valid_mask].view(-1).cpu()
+                p = preds[valid_mask].view(-1).cpu()
+                
+                # Compute confusion matrix indices
+                k = (t * num_classes + p)
+                cm = torch.bincount(k, minlength=num_classes * num_classes).reshape(num_classes, num_classes)
+                confusion_matrix += cm  # Keep background row/col for accurate unions
     
     # Use valid_samples for averaging (cores with annotations)
     if valid_samples > 0:
@@ -328,9 +330,14 @@ def main():
     print(f"Total parameters: {total_params:,}")
     print(f"Trainable parameters: {trainable_params:,}")
     
-    # Compute class weights
-    class_weights = compute_class_weights(train_dataset)
-    class_weights = class_weights.to(args.device)
+    # Compute class weights using robust implementation with clipping
+    print("Computing robust class weights from full dataset...")
+    class_weights = compute_robust_weights(
+        train_dataset, 
+        num_classes=8, 
+        ignore_index=0,
+        clip_range=(0.5, 4.0)  # Clip to sane range
+    ).to(args.device)
     
     # Loss functions (matching successful pixel_pixel)
     criterion_ce = nn.CrossEntropyLoss(weight=class_weights, ignore_index=0)
