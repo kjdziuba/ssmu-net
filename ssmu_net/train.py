@@ -310,6 +310,12 @@ class Trainer:
         print(f"Device: {self.device}")
         print(f"Model parameters: {sum(p.numel() for p in self.model.parameters()):,}")
         
+        # Set wavenumber array on model (get from first batch)
+        first_batch = next(iter(train_loader))
+        if hasattr(self.model, 'set_wavenumbers'):
+            self.model.set_wavenumbers(first_batch['wn'])
+            print(f"Set wavenumber array: {len(first_batch['wn'])} channels")
+        
         for epoch in range(self.epochs):
             start_time = time.time()
             
