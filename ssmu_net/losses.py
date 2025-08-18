@@ -45,20 +45,30 @@ class DiceLoss(nn.Module):
         probs = probs * valid_mask
         targets_oh = targets_oh * valid_mask
         
-        # Compute Dice coefficient per class
+        # Compute Dice coefficient per class (EXCLUDING BACKGROUND)
         dice_per_class = []
         for c in range(C):
+            # Skip background class (ignore_index)
+            if c == self.ignore_index:
+                continue
+                
             pred_c = probs[:, c]
             target_c = targets_oh[:, c]
             
             intersection = (pred_c * target_c).sum(dim=(1, 2))
             union = pred_c.sum(dim=(1, 2)) + target_c.sum(dim=(1, 2))
             
-            dice = (2 * intersection + self.smooth) / (union + self.smooth)
-            dice_per_class.append(dice)
+            # Only compute dice if there are pixels for this class
+            if union.sum() > 0:
+                dice = (2 * intersection + self.smooth) / (union + self.smooth)
+                dice_per_class.append(dice)
         
-        # Average across classes and batch
-        dice_score = torch.stack(dice_per_class, dim=1).mean()
+        # Average across valid classes and batch (excluding background)
+        if dice_per_class:
+            dice_score = torch.stack(dice_per_class, dim=1).mean()
+        else:
+            # No valid classes found, return 0 loss
+            dice_score = torch.tensor(1.0, device=logits.device)
         
         # Return loss (1 - dice)
         return 1.0 - dice_score
