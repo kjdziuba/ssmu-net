@@ -256,11 +256,29 @@ class DualSincConv1d(nn.Module):
         x_right = x[..., right_mask]  # (B, 1, C_right)
         
         # Process each segment separately
-        y_left, (flo_left, fhi_left) = self.sinc_left(x_left)
-        y_right, (flo_right, fhi_right) = self.sinc_right(x_right)
+        y_left, (flo_left, fhi_left) = self.sinc_left(x_left)    # (B, F_left, C_left)
+        y_right, (flo_right, fhi_right) = self.sinc_right(x_right) # (B, F_right, C_right)
         
-        # Concatenate outputs along channel dimension
-        y = torch.cat([y_left, y_right], dim=-1)  # (B, F_total, C_left + C_right)
+        # Concatenate outputs along filter dimension, not spectral dimension
+        y = torch.cat([y_left, y_right], dim=1)  # (B, F_left + F_right, C_max)
+        
+        # Handle different spectral lengths by padding to max length
+        C_left, C_right = y_left.shape[-1], y_right.shape[-1]
+        if C_left != C_right:
+            C_max = max(C_left, C_right)
+            if C_left < C_max:
+                pad_left = torch.zeros(y_left.shape[0], y_left.shape[1], C_max - C_left, device=y_left.device)
+                y_left_padded = torch.cat([y_left, pad_left], dim=-1)
+            else:
+                y_left_padded = y_left
+                
+            if C_right < C_max:
+                pad_right = torch.zeros(y_right.shape[0], y_right.shape[1], C_max - C_right, device=y_right.device)
+                y_right_padded = torch.cat([y_right, pad_right], dim=-1)
+            else:
+                y_right_padded = y_right
+                
+            y = torch.cat([y_left_padded, y_right_padded], dim=1)  # (B, F_total, C_max)
         
         # Concatenate cutoff frequencies
         flo_all = torch.cat([flo_left, flo_right])
