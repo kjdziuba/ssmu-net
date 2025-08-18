@@ -167,7 +167,8 @@ def validate(model, loader, criterion_ce, criterion_dice, device, num_classes=8,
                 for c_pred in range(num_classes):
                     if c_true == ignore_index or c_pred == ignore_index:
                         continue
-                    confusion_matrix[c_true, c_pred] += ((y == c_true) & (preds == c_pred) & valid_mask).sum()
+                    # Ensure all tensors are on CPU for confusion matrix update
+                    confusion_matrix[c_true, c_pred] += ((y == c_true) & (preds == c_pred) & valid_mask).sum().cpu().item()
     
     # Use valid_samples for averaging (cores with annotations)
     if valid_samples > 0:
@@ -293,16 +294,16 @@ def main():
         train_dataset,
         batch_size=args.batch_size,
         shuffle=True,
-        num_workers=2,
-        pin_memory=True
+        num_workers=0 if args.device == 'mps' else 2,  # MPS doesn't work well with multiprocessing
+        pin_memory=False if args.device == 'mps' else True  # MPS doesn't need pin_memory
     )
     
     val_loader = DataLoader(
         val_dataset,
         batch_size=1,  # MUST be 1 for full cores with variable sizes
         shuffle=False,
-        num_workers=2,
-        pin_memory=True
+        num_workers=0 if args.device == 'mps' else 2,  # MPS doesn't work well with multiprocessing
+        pin_memory=False if args.device == 'mps' else True  # MPS doesn't need pin_memory
     )
     
     # Get number of channels from data

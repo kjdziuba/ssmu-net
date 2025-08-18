@@ -1,0 +1,103 @@
+project_root: "/Volumes/LaCie/breast_experiments/ssmu_net_project"
+
+runtime_paths:
+  npz: "outputs/npz"
+  models: "outputs/models"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  logs: "outputs/logs"
+
+data:
+  raw_root: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL"
+  metadata_excel: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/metadata/BR2082_H260.xlsx"
+  annotations_dir: "/Volumes/LaCie/Breast_Cancer_Biomax_QCL/Annotations/BR2082_H260_annotations"
+  seed: 1337
+  folds: 3
+  batch_size: 4  # Match pixel_pixel
+  num_workers: 0
+  patch_size: 64  # Match pixel_pixel exactly
+  patches_per_core: 50  # Match pixel_pixel sampling
+  min_tissue_ratio: 0.1  # Require 10% tissue (less aggressive) 
+  min_foreground_ratio: 0.05  # Require 5% non-background (much lower)
+  spectral_range: [900, 1800]
+  wax_gap: [1350, 1490]
+  ignore_index: 0  # CRITICAL: Ignore background pixels in loss
+
+preprocess:
+  method: "optimized"
+  qc_mask:
+    band: [1600, 1700]
+    threshold: 2.5
+  sg:
+    window: 11
+    polyorder: 5
+    deriv: 2
+  double_l2: true
+
+model:
+  sinc:
+    filters: 32
+    kernel_size: 129
+    wn_min: 900.0
+    wn_max: 1800.0
+  ssm:
+    type: "mamba"
+    layers: 2
+    d_state: 16
+    d_conv: 4
+    expand: 2
+  embed: 32
+  unet:
+    base: 32
+  classes: 8
+  pooling: "attention"
+  chunk_size: 512
+
+loss:
+  seg:
+    dice: true
+    ce: true
+    class_weights: [0.0, 10.0, 5.0, 1.0, 3.0, 20.0, 8.0, 15.0]  # Aggressive weights
+  sparsity:
+    alpha: 1.0e-4
+    beta: 1.0e-4
+    ramp_epochs: 10
+
+training:
+  epochs: 100
+  lr: 1.0e-3
+  warmup_epochs: 5
+  min_lr: 1.0e-6
+  lr_schedule: "cosine"
+  grad_clip: 1.0
+  early_stop_patience: 20
+
+# Benchmark model settings
+benchmark:
+  model_name: "spectral_attention"
+  in_channels: 354  # After wax gap removal
+  num_classes: 8
+
+# Optimizer settings for benchmark
+optim:
+  lr: 1.0e-3
+  weight_decay: 1.0e-2
+  epochs: 100
+  scheduler: "cosine"
+  amp: false
+  grad_clip: 1.0
+
+# Sampling strategy matching pixel_pixel
+sampling:
+  max_patches_per_core_train: 50  # Exactly like pixel_pixel
+  max_patches_per_core_val: 10
+  min_foreground_ratio: 0.05  # Less aggressive (match data section)
+  
+augmentation:
+  train:
+    random_rotate: true
+    random_flip: true
+    channel_shuffle: true
+    label_shuffle: true
+    mask_misregister: [2, 4, 8]
+  holdout: ["slide_id", "block_id", "session_id"]

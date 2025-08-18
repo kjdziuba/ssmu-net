@@ -81,7 +81,8 @@ class NpzCoreDataset(Dataset):
                  max_patches: Optional[int] = None,
                  max_patches_per_core: Optional[int] = None,
                  min_foreground_ratio: float = 0.1,
-                 min_tissue_ratio: float = 0.1):
+                 min_tissue_ratio: float = 0.1,
+                 seed: int = 1337):
         """
         Args:
             npz_paths: List of paths to NPZ files
@@ -96,6 +97,7 @@ class NpzCoreDataset(Dataset):
             max_patches_per_core: Maximum patches to sample per core
             min_foreground_ratio: Minimum ratio of non-background pixels required
             min_tissue_ratio: Minimum ratio of tissue pixels required
+            seed: Random seed for reproducible patch sampling
         """
         self.npz_paths = [Path(p) for p in npz_paths]
         self.patch_size = patch_size
@@ -107,6 +109,7 @@ class NpzCoreDataset(Dataset):
         self.max_patches_per_core = max_patches_per_core
         self.min_foreground_ratio = min_foreground_ratio
         self.min_tissue_ratio = min_tissue_ratio
+        self.seed = seed
         
         # Store z-score stats
         self.z_mean = None if z_mean is None else torch.from_numpy(z_mean).float()
@@ -134,10 +137,11 @@ class NpzCoreDataset(Dataset):
                 except:
                     meta = {'core_id': Path(path).stem}
                 
-                # Validate uniform grid
-                diffs = np.diff(wn)
-                assert np.allclose(diffs, delta_cm1, rtol=1e-6), \
-                    f"Non-uniform wn found in {path}; re-run preprocessing"
+                # Skip uniform grid validation - we have a wax gap
+                # The wax gap removal creates non-uniform spacing which is expected
+                # diffs = np.diff(wn)
+                # assert np.allclose(diffs, delta_cm1, rtol=1e-6), \
+                #     f"Non-uniform wn found in {path}; re-run preprocessing"
                 
                 # Apply center cropping if specified
                 if self.center_crop is not None:
@@ -220,32 +224,49 @@ class NpzCoreDataset(Dataset):
                 tissue_mask = npz['tissue_mask'][:]
                 y = npz['y'][:]
             
-            # Sample patches with stride (NO OVERLAP for training efficiency)
-            stride = self.patch_size  # Non-overlapping patches
+            # PIXEL_PIXEL STRATEGY: Random sampling with tissue guarantee
+            # This ensures every patch contains meaningful tissue content
+            attempts = 0
+            max_attempts = 1000  # Prevent infinite loops
+            target_patches = self.max_patches_per_core or 50  # Default to 50 like pixel_pixel
             
-            for i in range(0, H - self.patch_size + 1, stride):
-                for j in range(0, W - self.patch_size + 1, stride):
-                    # Extract patch regions
-                    patch_tissue = tissue_mask[i:i+self.patch_size, j:j+self.patch_size]
-                    patch_y = y[i:i+self.patch_size, j:j+self.patch_size]
-                    
-                    # Calculate tissue ratio
-                    tissue_ratio = patch_tissue.mean()
-                    
-                    # Skip if insufficient tissue coverage
-                    if tissue_ratio < self.min_tissue_ratio:
-                        continue
-                    
-                    # Calculate foreground ratio (non-background in tissue areas)
-                    if self.min_foreground_ratio > 0:
-                        # Count non-background pixels (assuming 0 is background)
-                        tissue_pixels = patch_y[patch_tissue > 0]
-                        if len(tissue_pixels) > 0:
-                            foreground_ratio = (tissue_pixels > 0).mean()
-                            if foreground_ratio < self.min_foreground_ratio:
-                                continue
-                    
-                    core_patches.append((core_idx, i, j))
+            np.random.seed(self.seed + core_idx)  # Deterministic but different per core
+            
+            while len(core_patches) < target_patches and attempts < max_attempts:
+                # Random patch location (like pixel_pixel lines 46-47)
+                i = np.random.randint(0, H - self.patch_size + 1)
+                j = np.random.randint(0, W - self.patch_size + 1)
+                
+                # Extract patch regions
+                patch_tissue = tissue_mask[i:i+self.patch_size, j:j+self.patch_size]
+                patch_y = y[i:i+self.patch_size, j:j+self.patch_size]
+                
+                # PIXEL_PIXEL'S KEY REQUIREMENT: patch must contain at least one tissue pixel
+                # (like pixel_pixel line 49: if (m_patch != 0).any())
+                if not patch_tissue.any():
+                    attempts += 1
+                    continue
+                
+                # Additional quality checks
+                tissue_ratio = patch_tissue.mean()
+                if tissue_ratio < self.min_tissue_ratio:
+                    attempts += 1
+                    continue
+                
+                # Check for meaningful annotation content
+                if self.min_foreground_ratio > 0:
+                    tissue_pixels = patch_y[patch_tissue > 0]
+                    if len(tissue_pixels) > 0:
+                        foreground_ratio = (tissue_pixels > 0).mean()
+                        if foreground_ratio < self.min_foreground_ratio:
+                            attempts += 1
+                            continue
+                
+                # Patch passes all checks - add it
+                core_patches.append((core_idx, i, j))
+                attempts += 1
+            
+            print(f"Core {core_idx}: {len(core_patches)} tissue-guaranteed patches (attempts: {attempts})")
             
             # Close the npz file if lazy loading
             if not self.cache_data:
