@@ -259,20 +259,20 @@ class DualSincConv1d(nn.Module):
         y_left, (flo_left, fhi_left) = self.sinc_left(x_left)    # (B, F_left, C_left)
         y_right, (flo_right, fhi_right) = self.sinc_right(x_right) # (B, F_right, C_right)
         
-        # Handle different spectral lengths by padding to max length BEFORE concatenating
+        # Handle different spectral lengths - pad shorter segment to match longer
         C_left, C_right = y_left.shape[-1], y_right.shape[-1]
         C_max = max(C_left, C_right)
         
-        # Pad shorter segment to match longer one
+        # Pad shorter segment with zeros to match longer one
         if C_left < C_max:
-            pad_left = torch.zeros(y_left.shape[0], y_left.shape[1], C_max - C_left, device=y_left.device)
-            y_left = torch.cat([y_left, pad_left], dim=-1)
+            pad_size = C_max - C_left
+            y_left = F.pad(y_left, (0, pad_size), mode='constant', value=0)
             
         if C_right < C_max:
-            pad_right = torch.zeros(y_right.shape[0], y_right.shape[1], C_max - C_right, device=y_right.device)
-            y_right = torch.cat([y_right, pad_right], dim=-1)
+            pad_size = C_max - C_right
+            y_right = F.pad(y_right, (0, pad_size), mode='constant', value=0)
         
-        # Now concatenate along filter dimension (both have same spectral length C_max)
+        # Now both have same spectral length, concatenate along filter dimension
         y = torch.cat([y_left, y_right], dim=1)  # (B, F_left + F_right, C_max)
         
         # Concatenate cutoff frequencies
