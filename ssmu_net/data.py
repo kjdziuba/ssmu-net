@@ -24,6 +24,10 @@ def resolve_npz_path(path) -> str:
         # Strip the old absolute path and use current working directory
         relative_path = path_str.replace('/mnt/e/breast_experiments/ssmu_net_project/', '')
         return relative_path
+    elif path_str.startswith('/Volumes/LaCie/breast_experiments/ssmu_net_project/'):
+        # Handle Mac paths for RunPod
+        relative_path = path_str.replace('/Volumes/LaCie/breast_experiments/ssmu_net_project/', '')
+        return relative_path
     return path_str
 
 
@@ -540,7 +544,7 @@ def create_dataloaders(cfg: Dict[str, Any],
                       train_paths: List[str],
                       val_paths: List[str],
                       test_paths: Optional[List[str]] = None,
-                      use_zscore: bool = True) -> Dict[str, DataLoader]:
+                      use_zscore: bool = False) -> Dict[str, DataLoader]:
     """Create dataloaders for training, validation, and optionally test
     
     Args:
